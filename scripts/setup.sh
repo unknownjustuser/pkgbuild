@@ -20,6 +20,12 @@ setup_archfiery_gpg() {
   sudo pacman-key --keyserver keyserver.ubuntu.com --recv-key 38B3A1DCEE2408A5BFA63E105357F2D3B5E38D00
   sudo pacman-key --finger 38B3A1DCEE2408A5BFA63E105357F2D3B5E38D00
   sudo pacman-key --lsign-key 38B3A1DCEE2408A5BFA63E105357F2D3B5E38D00
+  curl -O https://blackarch.org/strap.sh
+  echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c
+  chmod +x strap.sh
+  sudo ./strap.sh
+  rm -rf strap.sh
+  sudo pacman -Syyu
 }
 
 setup_makepkg() {
@@ -27,16 +33,17 @@ setup_makepkg() {
   # sudo mv /etc/makepkg-optimize.conf /etc/makepkg.conf
   sudo sed -i 's|^#\(BUILDDIR=\).*|\1/tmp/makepkg|' /etc/makepkg.conf
   sudo sed -i 's|BUILDENV=.*|BUILDENV=(!distcc color !ccache check sign)|' /etc/makepkg.conf
-  sudo sed -i 's/^#GPGKEY=.*/GPGKEY="5357F2D3B5E38D00"/' /etc/makepkg.conf
-  sudo sed -i 's|^#\(COMPRESSGZ=\).*|\1\(gzip -c -f -n --best\)|' /etc/makepkg.conf
-  sudo sed -i 's|^#\(COMPRESSBZ2=\).*|\1\(bzip2 -c -f --best\)|' /etc/makepkg.conf
-  sudo sed -i 's|^#\(COMPRESSXZ=\).*|\1\(xz -T0 -c -z --best -\)|' /etc/makepkg.conf
-  sudo sed -i 's|^#\(COMPRESSZST=\).*|\1\(zstdmt -c -z -q --ultra -22 -\)|' /etc/makepkg.conf
-  sudo sed -i 's|^#\(COMPRESSLRZ=\).*|\1\(lrzip -9 -q\)|' /etc/makepkg.conf
-  sudo sed -i 's|^#\(COMPRESSLZO=\).*|\1\(lzop -q --best\)|' /etc/makepkg.conf
-  sudo sed -i 's|^#\(COMPRESSZ=\).*|\1\(compress -c -f\)|' /etc/makepkg.conf
-  sudo sed -i 's|^#\(COMPRESSLZ4=\).*|\1\(lz4 -q --best\)|' /etc/makepkg.conf
-  sudo sed -i 's|^#\(COMPRESSLZ=\).*|\1\(lzip -c -f\)|' /etc/makepkg.conf
+  sudo sed -i 's|^#PACKAGER=.*|PACKAGER="unknownjustuser (archfiery) <unknown.just.user@proton.me>"|' /etc/makepkg.conf
+  sudo sed -i 's|^#GPGKEY=.*|GPGKEY="5357F2D3B5E38D00"|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSGZ=\).*|\1\(gzip -c -f -n --best\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSBZ2=\).*|\1\(bzip2 -c -f --best\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSXZ=\).*|\1\(xz -T0 -c -z --best -\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSZST=\).*|\1\(zstdmt -c -z -q --ultra -22 -\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSLRZ=\).*|\1\(lrzip -9 -q\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSLZO=\).*|\1\(lzop -q --best\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSZ=\).*|\1\(compress -c -f\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSLZ4=\).*|\1\(lz4 -q --best\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSLZ=\).*|\1\(lzip -c -f\)|' /etc/makepkg.conf
 }
 
 # setup_pacman_conf() {
@@ -72,10 +79,10 @@ SudoLoop
 #UpgradeMenu
 #NewsOnUpgrade
 
-LocalRepo
+#LocalRepo
 #Chroot
 Sign
-SignDb
+#SignDb
 KeepRepoCache
 SkipReview
 

@@ -17,7 +17,9 @@ current_date=$(date +"%Y-%m-%d")
 
 copy_pkg() {
   cd "$repo_dir" || exit
-  cp -r "$archfiery_repo"/* "$repo_dir/x86_64"
+  if [[ -n "$(ls -A "$archfiery_repo")" ]]; then
+    cp -r "$archfiery_repo"/* "$repo_dir/x86_64"
+  fi
 
   for dir in "$packages"/*/; do
     cp -r "$dir"/*.pkg.tar.* "$repo_dir/x86_64"
