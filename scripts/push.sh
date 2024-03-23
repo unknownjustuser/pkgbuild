@@ -6,11 +6,12 @@
 
 # Set flags to make robust
 set -euo pipefail
+# Get the directory path of the script
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
 # Lowercase variable names
+packages="$script_dir/../packages"
 repo_dir="/home/cirrusci/repo"
-pkgbuild_repo="/home/cirrusci/pkgbuild"
-packages="$pkgbuild_repo/packages"
 parucache="/home/cirrusci/.cache/paru/clone"
 current_date=$(date +"%Y-%m-%d")
 
