@@ -2,25 +2,29 @@
 # shellcheck disable=SC2035
 
 repo_dir="/home/cirrusci/repo"
+# x86_64_dir="$repo_dir/x86_64"
 
 install_deps() {
-  sudo pacman -Syyu --noconfirm --needed archlinux-keyring
+  # Update the system and install essential x86_64
+  sudo pacman -Syy --noconfirm --quiet --needed --noprogressbar archlinux-keyring
 }
 
 setup_archfiery_gpg() {
   gpg --recv-keys 38B3A1DCEE2408A5BFA63E105357F2D3B5E38D00
-  echo "$GPG_PRIV" >priv.asc
-  sudo chown cirrusci:cirrusci priv.asc
-  gpg --import priv.asc
-  sudo pacman-key --import priv.asc
-  rm priv.asc
+  echo "$GPG_PRIV" >~/priv.asc
+  sudo chown -R cirrusci:cirrusci *
+  gpg --import ~/priv.asc
+  sudo pacman-key --import ~/priv.asc
+  rm -rf ~/priv.asc
   sudo pacman-key --keyserver keyserver.ubuntu.com --recv-key 38B3A1DCEE2408A5BFA63E105357F2D3B5E38D00
+  sudo pacman-key --finger 38B3A1DCEE2408A5BFA63E105357F2D3B5E38D00
   sudo pacman-key --lsign-key 38B3A1DCEE2408A5BFA63E105357F2D3B5E38D00
   curl -O https://blackarch.org/strap.sh
-  sha1sum --check <(echo "26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh")
+  echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c
   chmod +x strap.sh
   sudo ./strap.sh
-  rm strap.sh
+  rm -rf strap.sh
+  sudo pacman -Syyu
   sudo sed -i 's/^#Server = https/Server = https/g' /etc/pacman.d/blackarch-mirrorlist
   sudo pacman -Syy
 }
@@ -30,54 +34,101 @@ setup_makepkg() {
   sudo sed -i 's|BUILDENV=.*|BUILDENV=(!distcc color !ccache check sign)|' /etc/makepkg.conf
   sudo sed -i 's|^#PACKAGER=.*|PACKAGER="unknownjustuser (archfiery) <unknown.just.user@proton.me>"|' /etc/makepkg.conf
   sudo sed -i 's|^#GPGKEY=.*|GPGKEY="5357F2D3B5E38D00"|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSGZ=\).*|\1\(gzip -c -f -n --best\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSBZ2=\).*|\1\(bzip2 -c -f --best\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSXZ=\).*|\1\(xz -T0 -c -z --best -\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSZST=\).*|\1\(zstdmt -c -z -q --ultra -22 -\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSLRZ=\).*|\1\(lrzip -9 -q\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSLZO=\).*|\1\(lzop -q --best\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSZ=\).*|\1\(compress -c -f\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSLZ4=\).*|\1\(lz4 -q --best\)|' /etc/makepkg.conf
+  # sudo sed -i 's|^#\(COMPRESSLZ=\).*|\1\(lzip -c -f\)|' /etc/makepkg.conf
 }
+
+# setup_pacman_conf() {
+#   sudo sed -i 's|^NoProgressBar|#NoProgressBar|g' /etc/pacman.conf
+#   sudo sed -i 's|^#Color|Color|g' /etc/pacman.conf
+# }
 
 setup_paru_conf() {
   sudo tee -a /etc/paru.conf <<EOF
+#
+# $PARU_CONF
+# /etc/paru.conf
+# ~/.config/paru/paru.conf
+#
+# See the paru.conf(5) manpage for options
+
+#
+# GENERAL OPTIONS
+#
 [options]
 PgpFetch
 Devel
 Provides
 DevelSuffixes = -git -cvs -svn -bzr -darcs -always -hg -fossil
+#AurOnly
+#BottomUp
+#RemoveMake
 SudoLoop
+#UseAsk
+#SaveChanges
+#CombinedUpgrade
+#CleanAfter
+#UpgradeMenu
+#NewsOnUpgrade
+
+#LocalRepo
+#Chroot
+Sign
+#SignDb
 KeepRepoCache
 SkipReview
-Sign
+
+#
+# Binary OPTIONS
+#
+#[bin]
+#FileManager = vifm
+#MFlags = --skippgpcheck
+#Sudo = doas
+
 EOF
 }
 
 setup_repo() {
+  # sudo mkdir -p "$repo_dir/x86_64"
+  # sudo install -d "$repo_dir/x86_64" -o "$USER"
+
+  # if [[ ! -f "$x86_64_dir/archfiery_repo.*" ]]; then
+  #   sudo -u cirrusci repo-add /var/cache/pacman/archfiery_repo/archfiery_repo.db.tar.gz
+  # fi
+
+  sudo chmod 777 *
   cd "$repo_dir/x86_64" || exit
 
   for pattern in *.{db,db.sig,db.tar.gz,db.tar.gz.sig,files,files.sig,files.tar.gz,files.tar.gz.sig,old}; do
     rm -f "$pattern"
   done
 
-  pkg_files=()
-  if [[ -n $(
-    shopt -s nullglob
-    echo *.pkg.tar.zst
-  ) ]]; then
-    pkg_files+=('*.pkg.tar.zst')
-  fi
-  if [[ -n $(
-    shopt -s nullglob
-    echo *.pkg.tar.gz
-  ) ]]; then
-    pkg_files+=('*.pkg.tar.gz')
-  fi
-  if [[ -n $(
-    shopt -s nullglob
-    echo *.pkg.tar.xz
-  ) ]]; then
-    pkg_files+=('*.pkg.tar.xz')
-  fi
+  remove_if_exists() {
+    file_pattern="$1"
+    if [[ -f "$file_pattern" ]]; then
+      rm "$file_pattern"
+    fi
+  }
 
-  if [[ ${#pkg_files[@]} -gt 0 ]]; then
-    repo-add --verify --sign archfiery_repo.db.tar.gz "${pkg_files[@]}"
-  else
-    echo "No package files found to add to the repository."
-  fi
+  remove_if_exists "$repo_dir/x86_64/*.pkg.tar.zst"
+  repo-add --verify --sign archfiery_repo.db.tar.gz *.pkg.tar.zst
+
+  remove_if_exists "$repo_dir/x86_64/*.pkg.tar.gz"
+  repo-add --verify --sign archfiery_repo.db.tar.gz *.pkg.tar.gz
+
+  remove_if_exists "$repo_dir/x86_64/*.pkg.tar.xz"
+  repo-add --verify --sign archfiery_repo.db.tar.gz *.pkg.tar.xz
+
+  sudo chmod 777 *
+  cd - || exit
 
   sudo tee -a /etc/pacman.conf <<EOF
 
@@ -93,25 +144,26 @@ Server = file:///home/cirrusci/repo/x86_64
 EOF
 
   ls -al "$repo_dir/x86_64"
+
   sudo pacman -Syy
 }
 
 setup_git() {
   cat >>/home/cirrusci/.gitconfig <<EOF
 [user]
-    email = unknown.just.user@proton.me
-    name = unknownjustuser
+	email = unknown.just.user@proton.me
+	name = unknownjustuser
 [init]
-    defaultBranch = main
+	defaultBranch = main
 [core]
-    autocrlf = false
+	autocrlf = false
 [merge]
-    tool = meld
+	tool = meld
 [filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 EOF
 }
 
@@ -119,6 +171,7 @@ main() {
   install_deps
   setup_archfiery_gpg
   setup_makepkg
+  # setup_pacman_conf
   setup_paru_conf
   setup_repo
   setup_git
