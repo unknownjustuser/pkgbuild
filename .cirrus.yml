@@ -23,7 +23,9 @@ task:
     cd /home/cirrusci/pkgbuild/
     chmod +x main.sh
     ./main.sh setup
-  build_pkgs_txt_script: |
-    ./main.sh build-txt build-pkgbuild
+  matrix:
+    platforms: [build-txt, build-pkgbuild]
+  build_pkgs_script: |
+    ./main.sh build-$PLATFORM
   push_pkgs_script: |
     ./main.sh push
