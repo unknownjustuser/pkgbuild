@@ -1,0 +1,14 @@
+pkgbase = adb-toolkit
+	pkgdesc = A toolkit for Android Debug Bridge (ADB) and Fastboot
+	pkgver = 1.0
+	pkgrel = 1
+	url = https://github.com/ASHWIN990/ADB-Toolkit
+	arch = any
+	license = GPL3
+	depends = android-tools
+	depends = ruby
+	depends = metasploit
+	source = git+https://github.com/ASHWIN990/ADB-Toolkit.git
+	md5sums = SKIP
+
+pkgname = adb-toolkit

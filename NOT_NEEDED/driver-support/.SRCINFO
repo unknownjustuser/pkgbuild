@@ -1,0 +1,10 @@
+pkgbase = driver-support
+	pkgdesc = driver
+	pkgver = 1
+	pkgrel = 1
+	url = https://www.linux.org/
+	arch = any
+	license = GPL3
+
+pkgname = driver-support
+	depends = 

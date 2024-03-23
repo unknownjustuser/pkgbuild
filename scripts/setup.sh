@@ -7,7 +7,6 @@ repo_dir="/home/cirrusci/repo"
 install_deps() {
   # Update the system and install essential x86_64
   sudo pacman -Syy --noconfirm --quiet --needed --noprogressbar archlinux-keyring
-  sudo pacman -Syy --noconfirm --quiet --needed --noprogressbar reflector rsync curl wget git-lfs openssh devtools git lib32-readline lib32-zlib namcap fakeroot audit grep diffutils parallel
 }
 
 setup_archfiery_gpg() {
@@ -26,6 +25,8 @@ setup_archfiery_gpg() {
   sudo ./strap.sh
   rm -rf strap.sh
   sudo pacman -Syyu
+  sudo sed -i 's/^#Server = https/Server = https/g' /etc/pacman.d/blackarch-mirrorlist
+  sudo pacman -Syy
 }
 
 setup_makepkg() {
