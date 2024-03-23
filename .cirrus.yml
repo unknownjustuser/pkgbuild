@@ -23,10 +23,7 @@ task:
     cd /home/cirrusci/pkgbuild/
     chmod +x main.sh
     ./main.sh setup
-  matrix:
-    - name: build-txt
-      script: ./main.sh build-txt
-    - name: build-pkgbuild
-      script: ./main.sh build-pkgbuild
+  build_txt_pkgbuild: |
+    ./main.sh build-txt build-pkgbuild
   push_pkgs_script: |
     ./main.sh push
