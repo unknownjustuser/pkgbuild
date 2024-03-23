@@ -26,6 +26,12 @@ task:
   matrix:
     platforms: [build-txt, build-pkgbuild]
   build_pkgs_script: |
-    ./main.sh $PLATFORM
+    if [[ $PLATFORM == "build-txt" ]]; then
+      ./main.sh build-txt
+    elif [[ $PLATFORM == "build-pkgbuild" ]]; then
+      ./main.sh build-pkgbuild
+    else
+      echo "Invalid platform: $PLATFORM"
+    fi
   push_pkgs_script: |
     ./main.sh push
