@@ -25,6 +25,6 @@ task:
     ./main.sh setup
   build_and_push_script: |
     ./main.sh build-txt
-    sudo pacman -Rnc --noprogressbar --noconfirm --quiet jack2
+    sudo pacman -Rnc --noprogressbar --noconfirm jack2
     ./main.sh build-pkgbuild
     ./main.sh push
