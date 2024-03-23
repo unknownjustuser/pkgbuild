@@ -9,7 +9,6 @@ mkinitcpio-numlock
 libretro-meta
 nbfc-linux
 obsidian-bin
-pamac-all
 makepkg-optimize
 pomatez
 stacer-bin
