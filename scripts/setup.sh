@@ -30,8 +30,6 @@ setup_archfiery_gpg() {
 }
 
 setup_makepkg() {
-  # sudo mv /etc/makepkg.conf /etc/makepkg.conf.old
-  # sudo mv /etc/makepkg-optimize.conf /etc/makepkg.conf
   sudo sed -i 's|^#\(BUILDDIR=\).*|\1/tmp/makepkg|' /etc/makepkg.conf
   sudo sed -i 's|BUILDENV=.*|BUILDENV=(!distcc color !ccache check sign)|' /etc/makepkg.conf
   sudo sed -i 's|^#PACKAGER=.*|PACKAGER="unknownjustuser (archfiery) <unknown.just.user@proton.me>"|' /etc/makepkg.conf

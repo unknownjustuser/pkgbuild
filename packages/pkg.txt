@@ -9,6 +9,7 @@ mkinitcpio-numlock
 nbfc-linux
 obsidian-bin
 pamac-all
+makepkg-optimize
 pomatez
 stacer-bin
 thunar-extended
