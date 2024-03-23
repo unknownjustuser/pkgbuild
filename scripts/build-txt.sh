@@ -11,10 +11,9 @@ set -euo pipefail
 packages_dir="/home/cirrusci/pkgbuild/packages"
 
 txt() {
-  # while IFS= read -r line; do
-  #   paru -Sy --noprogressbar --noconfirm --quiet --needed "$line"
-  # done <"$packages_dir"/*.txt
-  paru -Syw --nokeepsrc --noprogressbar --noconfirm --quiet --needed --failfast "$(cat "$packages_dir"/pkg.txt)"
+  while IFS= read -r line; do
+    paru -Syw --nokeepsrc --noprogressbar --noconfirm --quiet --needed --failfast "$line"
+  done <"$packages_dir"/*.txt
 }
 
 # Main script
