@@ -43,14 +43,12 @@ repoctl
 simplescreenrecorder-bin
 snapper-gui-git
 stacer-bin
-tela-icon-theme
+tela-icon-theme-bin
 thunar-extended
 thunar-megasync-bin
 thunar-secure-delete
 thunar-shares-plugin
 thunar-vcs-plugin
-timeshift
-timeshift-autosnap
 tlpui
 tor-browser-bin
 universal-android-debloater-bin
@@ -62,4 +60,5 @@ vala-panel-appmenu-xfce-git
 ventoy-bin
 visual-studio-code-bin
 yay-bin
+zed-editor
 zsh-theme-powerlevel10k-git
