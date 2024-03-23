@@ -23,7 +23,6 @@ task:
     cd /home/cirrusci/pkgbuild/
     chmod +x main.sh
     ./main.sh setup
-  build_txt_pkgbuild: |
+  build_and_push_script: |
     ./main.sh build-txt build-pkgbuild
-  push_pkgs_script: |
     ./main.sh push
