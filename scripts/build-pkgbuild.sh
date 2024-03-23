@@ -11,7 +11,7 @@ set -euo pipefail
 packages_dir="/home/cirrusci/pkgbuild/packages"
 
 build_pkgbuild() {
-  find "$packages_dir" -maxdepth 1 -type d | parallel -j0 --line-buffer '(cd "{}" && paru --noconfirm --needed --build "{}")'
+  find "$packages_dir" -maxdepth 1 -type d | parallel -j0 --line-buffer '(cd "{}" && paru --nokeepsrc --noprogressbar --noconfirm --quiet --needed --failfast --build "{}")'
 }
 
 # Main script
