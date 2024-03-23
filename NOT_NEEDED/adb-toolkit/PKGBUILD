@@ -1,0 +1,24 @@
+pkgname=adb-toolkit
+pkgver=1.0
+pkgrel=1
+pkgdesc="A toolkit for Android Debug Bridge (ADB) and Fastboot"
+arch=('any')
+url="https://github.com/ASHWIN990/ADB-Toolkit"
+license=('GPL3')
+depends=('android-tools' 'ruby' 'metasploit')
+source=("git+https://github.com/ASHWIN990/ADB-Toolkit.git")
+md5sums=('SKIP')
+
+package() {
+    cd "$srcdir/ADB-Toolkit"
+    install -Dm755 ADB-Toolkit.sh "$pkgdir/usr/bin/adb-toolkit"
+    install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm755 device-pull "$pkgdir/usr/bin/device-pull"
+    install -Dm755 modules/* "$pkgdir/usr/share/$pkgname/modules/"
+    install -Dm755 screenrecord "$pkgdir/usr/bin/screenrecord"
+    install -Dm755 screenshots "$pkgdir/usr/bin/screenshots"
+    install -Dm755 bug-report "$pkgdir/usr/bin/bug-report"
+    install -Dm755 metasploit "$pkgdir/usr/bin/metasploit"
+    install -Dm755 sys-dump-info "$pkgdir/usr/bin/sys-dump-info"
+}

@@ -1,0 +1,2 @@
+dex2jar
+android-apktool-bin

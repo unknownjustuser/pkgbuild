@@ -1,0 +1,45 @@
+pkgname='driver-support'
+pkgdesc='driver'
+pkgver=1
+pkgrel=1
+url='https://www.linux.org/'
+arch=('any')
+license=('GPL3')
+
+package() {
+  determine_processor_type() {
+    local proc_type
+    proc_type=$(lscpu)
+    if grep -qE "GenuineIntel" <<<"${proc_type}"; then
+      package+=(intel-ucode)
+    elif grep -qE "AuthenticAMD" <<<"${proc_type}"; then
+      package+=(amd-ucode)
+    fi
+  }
+
+  # Determine graphics card type and build package list
+  determine_graphics_card_type() {
+    local gpu_type
+    gpu_type=$(lspci)
+    if grep -qE "NVIDIA|GeForce" <<<"${gpu_type}"; then
+      package+=(nvidia nvidia-utils)
+    elif lspci | grep -qE "Radeon|AMD"; then
+      package+=(xf86-video-amdgpu)
+    elif grep -qE "Integrated Graphics Controller" <<<"${gpu_type}"; then
+      package+=(libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils libva-mesa-driver mesa lib32-mesa mesa-amber lib32-mesa-amber intel-media-driver)
+    elif grep -qE "Intel Corporation UHD" <<<"${gpu_type}"; then
+      package+=(libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils libva-mesa-driver mesa lib32-mesa mesa-amber lib32-mesa-amber intel-media-driver)
+    else
+      package+=(virtualbox-host-modules-arch xf86-input-vmmouse open-vm-tools xf86-video-vmware virtualbox-guest-utils libvirt virt-manager)
+    fi
+  }
+
+  determine_processor_type
+  determine_graphics_card_type
+
+  package+=("${package[@]}")
+
+  depends=(
+    "${package[@]}"
+  )
+}

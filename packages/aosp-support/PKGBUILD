@@ -1,0 +1,18 @@
+pkgname=aosp-support
+pkgver=0.10
+pkgrel=1
+pkgdesc='Metapackage to pull all dependencies required to build modern Android'
+arch=('x86_64')
+url='https://wiki.archlinux.org/title/Android#Building'
+license=('None')
+depends=('gcc-multilib' 'repo' 'git' 'gnupg' 'flex' 'bison' 'gperf' 'sdl'
+         'squashfs-tools' 'curl' 'ncurses' 'zlib' 'schedtool' 'perl-switch'
+         'zip' 'unzip' 'libxslt' 'bc' 'rsync' 'ccache' 'vim' 'inetutils'
+         'ncurses5-compat-libs' 'lib32-zlib' 'lib32-ncurses'
+         'lib32-readline' 'lib32-ncurses5-compat-libs' 'libxcrypt-compat'
+         'ffmpeg' 'ninja' 'xml2' 'lzop' 'pngcrush' 'imagemagick' 'git-lfs')
+optdepends=('java-environment: required for building Android 8 and older'
+            'wxgtk2: may be required for building old Android versions'
+            'python2-virtualenv: used to make python2 the default for building Android 10 and older'
+            'maven: Java project management and project comprehension tool'
+            'gradle: Powerful build system for the JVM')

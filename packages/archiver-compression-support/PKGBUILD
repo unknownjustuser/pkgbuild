@@ -1,0 +1,8 @@
+pkgname='archiver-compression-support'
+pkgdesc='File archiver and compression support'
+pkgver=0.1
+pkgrel=1
+url='https://www.linux.org/'
+arch=('any')
+license=('GPL3')
+depends=('zip' 'unzip' 'bzip2' 'gzip' 'lz4' 'lzop' 'pigz' 'lzo' '7zip' 'zstd' 'tar' 'pixz' 'xz' 'lrzip' 'lzip')

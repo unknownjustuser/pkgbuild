@@ -1,0 +1,20 @@
+pkgbase = archfiery-keyring
+	pkgdesc = ArchFiery PGP keyring
+	pkgver = 20240313
+	pkgrel = 1
+	url = https://gitlab.com/arch-linuxf/archfiery-keyring
+	install = archfiery-keyring.install
+	arch = any
+	license = GPL-3.0-or-later
+	checkdepends = python-coverage
+	checkdepends = python-pytest
+	makedepends = git
+	makedepends = python
+	makedepends = sequoia-sq
+	makedepends = pkgconf
+	makedepends = systemd
+	depends = pacman
+	source = archfiery-keyring::git+https://gitlab.com/arch-linuxf/archfiery-keyring.git
+	sha256sums = SKIP
+
+pkgname = archfiery-keyring

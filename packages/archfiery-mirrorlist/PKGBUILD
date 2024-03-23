@@ -1,0 +1,15 @@
+pkgname=archfiery-mirrorlist
+pkgver=0.0.1
+pkgrel=1
+pkgdesc="archfiery Linux Mirrorlist"
+arch=('any')
+url="https://gitlab.com/arch-linuxf/archfiery-mirrorlist"
+license=('GPL-3.0-or-later')
+depends=('pacman')
+source=("git+${url}")
+sha256sums=('SKIP')
+
+install() {
+  mkdir -p "$pkgdir/etc/pacman.d"
+  install -m644 "$srcdir/mirrorlist" "$pkgdir/etc/pacman.d/archfiery-mirrorlist"
+}

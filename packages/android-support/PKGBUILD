@@ -1,0 +1,15 @@
+pkgname=android-support
+pkgdesc="android support containing all needed packages"
+pkgver=1
+pkgrel=1
+arch=("any")
+license=("GPL")
+depends=(
+  'android-tools'
+  'android-udev'
+  'multilib-devel'
+  'fontconfig'
+  'ttf-droid'
+)
+
+optdepends=('aosp-support: Metapackage to pull all dependencies required to build modern Android')

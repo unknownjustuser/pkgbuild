@@ -1,0 +1,12 @@
+pkgbase = archfiery-mirrorlist
+	pkgdesc = archfiery Linux Mirrorlist
+	pkgver = 0.0.1
+	pkgrel = 1
+	url = https://gitlab.com/arch-linuxf/archfiery-mirrorlist
+	arch = any
+	license = GPL-3.0-or-later
+	depends = pacman
+	source = git+https://gitlab.com/arch-linuxf/archfiery-mirrorlist
+	sha256sums = SKIP
+
+pkgname = archfiery-mirrorlist

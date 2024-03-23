@@ -1,0 +1,23 @@
+pkgbase = timeshift-support
+	pkgdesc = Support package for enabling Timeshift with timeshift-autosnap and grub-btrfs
+	pkgver = 1
+	pkgrel = 1
+	url = https://linux.org
+	install = timeshift-support.install
+	arch = any
+	license = GPL3
+	makedepends = git
+	depends = timeshift
+	depends = timeshift-autosnap
+	depends = grub-btrfs
+	conflicts = snapper-support
+	conflicts = snapper
+	conflicts = snap-pac
+	source = grub-btrfs-timeshift.service
+	source = grub-btrfs-timeshift.path
+	source = timeshift-autosnap-fix.hook
+	sha256sums = SKIP
+	sha256sums = SKIP
+	sha256sums = SKIP
+
+pkgname = timeshift-support
