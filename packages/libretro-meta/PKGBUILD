@@ -21,7 +21,6 @@ package() {
 		"libretro-core-info"
 		"libretro-desmume"
 		"libretro-dolphin"
-		"libretro-duckstation"
 		"libretro-flycast"
 		"libretro-gambatte"
 		"libretro-genesis-plus-gx"
