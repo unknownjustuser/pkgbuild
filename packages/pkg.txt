@@ -25,7 +25,6 @@ mkinitcpio-numlock
 mkinitcpio-openswap
 mobydroid
 mugshot
-nbfc
 nbfc-linux
 ncurses5-compat-libs
 nvm
