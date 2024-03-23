@@ -6,6 +6,7 @@ gtk3-nocsd-git
 lib32-ncurses5-compat-libs
 lightdm-webkit2-theme-glorious
 mkinitcpio-numlock
+libretro-meta
 nbfc-linux
 obsidian-bin
 pamac-all
