@@ -23,15 +23,12 @@ task:
     cd /home/cirrusci/pkgbuild/
     chmod +x main.sh
     ./main.sh setup
+  build_pkgs_txt_script: |
+    ./main.sh build-txt
   matrix:
-    platforms: [build-txt, build-pkgbuild]
-  build_pkgs_script: |
-    if [[ $PLATFORM == "build-txt" ]]; then
-      ./main.sh build-txt
-    elif [[ $PLATFORM == "build-pkgbuild" ]]; then
-      ./main.sh build-pkgbuild
-    else
-      echo "Invalid platform: $PLATFORM"
-    fi
+    - name: build-txt
+      script: ./main.sh build-txt
+    - name: build-pkgbuild
+      script: ./main.sh build-pkgbuild
   push_pkgs_script: |
     ./main.sh push
