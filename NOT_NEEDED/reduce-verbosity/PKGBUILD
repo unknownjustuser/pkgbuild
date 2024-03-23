@@ -1,6 +1,6 @@
 # Maintainer: TNE <tne@linux.org>
 
-pkgname=-reduce-verbosity
+pkgname=reduce-verbosity
 pkgdesc="Reduce verbosity of some actions (sudo, pacman hooks)"
 pkgver=1.0.1
 pkgrel=1
