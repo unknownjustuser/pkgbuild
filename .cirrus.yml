@@ -24,5 +24,7 @@ task:
     chmod +x main.sh
     ./main.sh setup
   build_and_push_script: |
-    ./main.sh build-txt build-pkgbuild
+    ./main.sh build-txt
+    sudo pacman -Rnc jack2
+    ./main.sh build-pkgbuild
     ./main.sh push
