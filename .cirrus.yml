@@ -26,6 +26,6 @@ task:
   matrix:
     platforms: [build-txt, build-pkgbuild]
   build_pkgs_script: |
-    ./main.sh build-$PLATFORM
+    ./main.sh $PLATFORM
   push_pkgs_script: |
     ./main.sh push
