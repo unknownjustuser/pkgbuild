@@ -18,8 +18,40 @@ if [[ $# -eq 0 ]]; then
   exit 1
 fi
 
-# Make scripts executable
-chmod +x "$SCRIPTS_DIR"/*.sh
-
-# Execute the scripts in parallel
-parallel --no-notice -j0 --line-buffer "./{} {}" ::: "$SCRIPTS_DIR"/{setup,gensum,build-txt,build-pkgbuild,push,check,srcinfo}.sh ::: "$@"
+# Execute the corresponding script based on the command
+for cmd in "$@"; do
+  case "$cmd" in
+  setup)
+    chmod +x "$SCRIPTS_DIR"/setup.sh
+    ./"$SCRIPTS_DIR/setup.sh"
+    ;;
+  gensum)
+    chmod +x "$SCRIPTS_DIR"/gensum.sh
+    ./"$SCRIPTS_DIR"/gensum.sh
+    ;;
+  build-txt)
+    chmod +x "$SCRIPTS_DIR"/build-txt.sh
+    ./"$SCRIPTS_DIR/build-txt.sh"
+    ;;
+  build-pkgbuild)
+    chmod +x "$SCRIPTS_DIR"/build-pkgbuild.sh
+    ./"$SCRIPTS_DIR/build-pkgbuild.sh"
+    ;;
+  push)
+    chmod +x "$SCRIPTS_DIR"/push.sh
+    ./"$SCRIPTS_DIR/push.sh"
+    ;;
+  check)
+    chmod +x "$SCRIPTS_DIR"/check.sh
+    ./"$SCRIPTS_DIR/check.sh"
+    ;;
+  srcinfo)
+    chmod +x "$SCRIPTS_DIR"/srcinfo.sh
+    ./"$SCRIPTS_DIR/srcinfo.sh"
+    ;;
+  *)
+    echo "Invalid command. Available commands: setup, gensum, build-txt, build-pkgbuild, push, check, srcinfo"
+    exit 1
+    ;;
+  esac
+done
