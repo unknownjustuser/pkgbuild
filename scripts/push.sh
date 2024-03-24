@@ -6,12 +6,11 @@
 
 # Set flags to make robust
 set -euo pipefail
-# Get the directory path of the script
-script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
 # Lowercase variable names
-packages="$script_dir/../packages"
 repo_dir="/home/cirrusci/repo"
+pkgbuild_repo="/home/cirrusci/pkgbuild"
+packages="$pkgbuild_repo/packages"
 parucache="/home/cirrusci/.cache/paru/clone"
 current_date=$(date +"%Y-%m-%d")
 
@@ -61,7 +60,7 @@ push_repo_dir() {
   git add .
   git add ./*
   git commit -m "Add built packages on $current_date"
-  git remote set-url origin https://$GITHUB_TOKEN@github.com/unknownjustuser/repo.git
+  git remote set-url origin https://"$GITHUB_TOKEN"@github.com/unknownjustuser/repo.git
   git push -u origin main
 }
 
@@ -69,7 +68,7 @@ push_repo_dir() {
 #   cd "$pkgbuild_repo" || exit
 #   git add .
 #   git commit -m "Updated on $current_date"
-#   git remote set-url origin https://$GITLAB_TOKEN@gitlab.com/arch-linuxf/pkgbuild.git
+#   git remote set-url origin https://"$GITLAB_TOKEN"@gitlab.com/arch-linuxf/pkgbuild.git
 #   git push -u origin main
 # }
 
