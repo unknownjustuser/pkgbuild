@@ -18,11 +18,17 @@ copy_pkg() {
   cd "$repo_dir" || exit
 
   for dir in "$packages"/*/; do
-    cp -r "$dir"/*.pkg.tar.* "$repo_dir/x86_64"
+    pkg_files=("$dir"/*.pkg.tar.*)
+    if [[ "${#pkg_files[@]}" -gt 0 ]]; then
+      cp -r "${pkg_files[@]}" "$repo_dir/x86_64"
+    fi
   done
 
   for dir in "$parucache"/*/; do
-    cp -r "$dir"/*.pkg.tar.* "$repo_dir/x86_64"
+    pkg_files=("$dir"/*.pkg.tar.*)
+    if [[ "${#pkg_files[@]}" -gt 0 ]]; then
+      cp -r "${pkg_files[@]}" "$repo_dir/x86_64"
+    fi
   done
 }
 
