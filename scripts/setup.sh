@@ -10,12 +10,14 @@ install_deps() {
 }
 
 setup_archfiery_gpg() {
+  gpg --recv-keys 5357F2D3B5E38D00
   echo "$GPG_PRIV" >~/priv.asc
-  echo "$GPG_PUB" >~/pub.asc
   sudo chown -R cirrusci:cirrusci *
-  gpg --import ~/*.asc
-  sudo pacman-key --import ~/*.asc
-  rm -rf ~/*.asc
+  gpg --import ~/priv.asc
+  sudo pacman-key --import ~/priv.asc
+  rm -rf ~/priv.asc
+  sudo pacman-key --recv-key 5357F2D3B5E38D00 --keyserver keyserver.ubuntu.com
+  sudo pacman-key --finger 5357F2D3B5E38D00
   sudo pacman-key --lsign-key 5357F2D3B5E38D00
   sudo pacman -Syy
 }

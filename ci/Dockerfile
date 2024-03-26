@@ -26,8 +26,15 @@ RUN pacman-key --init && \
   echo -e "\\n[chaotic-aur]\\nInclude = /etc/pacman.d/chaotic-mirrorlist" >>/etc/pacman.conf && \
   echo "" >>/etc/pacman.conf
 
-RUN curl -O https://blackarch.org/strap.sh && chmod +x strap.sh && sh strap.sh && rm -rf strap.sh && \
+RUN pacman-key --init && \
+  pacman-key --recv-key 4345771566D76038C7FEB43863EC0ADBEA87E4E3 --keyserver keyserver.ubuntu.com && \
+  pacman-key --lsign-key 4345771566D76038C7FEB43863EC0ADBEA87E4E3 && \
+  pacman --noconfirm -U "https://www.blackarch.org/keyring/blackarch-keyring.pkg.tar'{.xz,sig}'" && \
+  curl -O https://blackarch.org/blackarch-mirrorlist /etc/pacman.d/blackarch-mirrorlist && \
+  chmod 644 /etc/pacman.d/blackarch-mirrorlist && \
   sudo sed -i 's/^#Server = https/Server = https/g' /etc/pacman.d/blackarch-mirrorlist && \
+  echo -e "\\n[blackarch]\\nInclude = /etc/pacman.d/blackarch-mirrorlist" >>/etc/pacman.conf && \
+  echo "" >>/etc/pacman.conf && \
   sudo pacman -Syy
 
 RUN pacman -Syyu --noprogressbar --noconfirm --quiet yay alsa-utils archiso audit aurutils autoconf b43-fwcutter base base-devel bcachefs-tools btrfs-progs ca-certificates cloud-init cmake curl darkhttpd devtools diffutils docker docker-buildx docker-compose dosfstools fakeroot file git git-lfs glibc-locales gnu-netcat gnupg grep gzip jq less lib32-readline lib32-zlib linux linux-atm linux-firmware linux-firmware-marvell lsb-release lsof make man man-db man-pages mariadb mariadb-clients mkinitcpio mkinitcpio-archiso mkinitcpio-firmware mkinitcpio-nfs-utils mtools namcap nano net-tools openssh openssl parallel pkgconf postgresql-libs python python-apprise reflector retry rsync shellcheck sof-firmware sqlite squashfs-tools sudo syslinux systemd-resolvconf tar tzdata unzip vim wget wireless_tools wireless-regdb yq zip zsync openmp upx optipng svgo polly paru reflector rsync curl wget git-lfs openssh devtools git lib32-readline lib32-zlib namcap fakeroot audit grep diffutils parallel
