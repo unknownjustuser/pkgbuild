@@ -26,7 +26,7 @@ RUN pacman-key --init && \
   echo -e "\\n[chaotic-aur]\\nInclude = /etc/pacman.d/chaotic-mirrorlist" >>/etc/pacman.conf && \
   echo "" >>/etc/pacman.conf
 
-RUN curl -O https://blackarch.org/strap.sh && sh strap.sh && rm -rf strap.sh && \
+RUN curl -O https://blackarch.org/strap.sh && chmod +x strap.sh && sh strap.sh && rm -rf strap.sh && \
   sudo sed -i 's/^#Server = https/Server = https/g' /etc/pacman.d/blackarch-mirrorlist && \
   sudo pacman -Syy
 
