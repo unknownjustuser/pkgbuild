@@ -1,11 +1,11 @@
 # Do not edit individual Dockerfiles manually. Instead, please make changes to the Dockerfile.template, which will be used by the build script to generate Dockerfiles.
 
-FROM archlinux:base-devel
+FROM archlinux:latest
 
 LABEL maintainer="unknownjustuser <unknown.just.user@proton.me>"
 
 # Change default shell for RUN from Dash to Bash
-SHELL ["/bin/bash", "-exo", "pipefail", "-c"]
+SHELL ["/bin/bash"]
 
 ENV TERM=dumb \
   PAGER=cat
