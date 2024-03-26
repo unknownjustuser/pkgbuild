@@ -4,12 +4,6 @@ FROM archlinux:latest
 
 LABEL maintainer="unknownjustuser <unknown.just.user@proton.me>"
 
-# Change default shell for RUN from Dash to Bash
-SHELL ["/bin/bash"]
-
-ENV TERM=dumb \
-  PAGER=cat
-
 ENV PATH="/home/cirrusci/bin:/home/cirrusci/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/core_perl:$PATH"
 
 RUN sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /etc/locale.gen && \
