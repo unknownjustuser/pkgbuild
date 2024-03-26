@@ -19,7 +19,7 @@ RUN sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /etc/locale.gen && \
 
 # Configure environment
 RUN pacman-key --init && \
-  pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com && \
+  pacman-key --keyserver keyserver.ubuntu.com --recv-key 3056513887B78AEB && \
   pacman-key --lsign-key 3056513887B78AEB && \
   pacman --noconfirm -U 'https://geo-mirror.chaotic.cx/chaotic-aur/chaotic-'{keyring,mirrorlist}'.pkg.tar.zst' && \
   echo "[multilib]" >>/etc/pacman.conf && echo "Include = /etc/pacman.d/mirrorlist" >>/etc/pacman.conf && \
@@ -27,7 +27,7 @@ RUN pacman-key --init && \
   echo "" >>/etc/pacman.conf
 
 RUN pacman-key --init && \
-  pacman-key --recv-key 4345771566D76038C7FEB43863EC0ADBEA87E4E3 --keyserver keyserver.ubuntu.com && \
+  pacman-key --keyserver keyserver.ubuntu.com --recv-key 4345771566D76038C7FEB43863EC0ADBEA87E4E3 && \
   pacman-key --lsign-key 4345771566D76038C7FEB43863EC0ADBEA87E4E3 && \
   pacman --noconfirm -U "https://www.blackarch.org/keyring/blackarch-keyring.pkg.tar'{.xz,sig}'" && \
   curl -O https://blackarch.org/blackarch-mirrorlist /etc/pacman.d/blackarch-mirrorlist && \
