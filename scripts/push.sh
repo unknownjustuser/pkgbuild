@@ -17,11 +17,11 @@ current_date=$(date +"%Y-%m-%d")
 copy_pkg() {
   cd "$repo_dir" || exit
 
-  for dir in "$packages"/*; do
+  for dir in "$packages"/; do
     cp -r "$dir"/*.pkg.tar.* "$repo_dir/x86_64"
   done
 
-  for dir in "$parucache"/*; do
+  for dir in "$parucache"/; do
     cp -r "$dir"/*.pkg.tar.* "$repo_dir/x86_64"
   done
 }
