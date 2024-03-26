@@ -10,22 +10,13 @@ install_deps() {
 }
 
 setup_archfiery_gpg() {
-  gpg --recv-keys 38B3A1DCEE2408A5BFA63E105357F2D3B5E38D00
   echo "$GPG_PRIV" >~/priv.asc
+  echo "$GPG_PUB" >~/pub.asc
   sudo chown -R cirrusci:cirrusci *
-  gpg --import ~/priv.asc
-  sudo pacman-key --import ~/priv.asc
-  rm -rf ~/priv.asc
-  sudo pacman-key --keyserver keyserver.ubuntu.com --recv-key 38B3A1DCEE2408A5BFA63E105357F2D3B5E38D00
-  sudo pacman-key --finger 38B3A1DCEE2408A5BFA63E105357F2D3B5E38D00
-  sudo pacman-key --lsign-key 38B3A1DCEE2408A5BFA63E105357F2D3B5E38D00
-  curl -O https://blackarch.org/strap.sh
-  echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c
-  chmod +x strap.sh
-  sudo ./strap.sh
-  rm -rf strap.sh
-  sudo pacman -Syyu
-  sudo sed -i 's/^#Server = https/Server = https/g' /etc/pacman.d/blackarch-mirrorlist
+  gpg --import ~/*.asc
+  sudo pacman-key --import ~/*.asc
+  rm -rf ~/*.asc
+  sudo pacman-key --lsign-key 5357F2D3B5E38D00
   sudo pacman -Syy
 }
 

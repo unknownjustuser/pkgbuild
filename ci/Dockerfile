@@ -24,7 +24,14 @@ RUN pacman-key --init && \
   pacman --noconfirm -U 'https://geo-mirror.chaotic.cx/chaotic-aur/chaotic-'{keyring,mirrorlist}'.pkg.tar.zst' && \
   echo "[multilib]" >>/etc/pacman.conf && echo "Include = /etc/pacman.d/mirrorlist" >>/etc/pacman.conf && \
   echo -e "\\n[chaotic-aur]\\nInclude = /etc/pacman.d/chaotic-mirrorlist" >>/etc/pacman.conf && \
-  echo "" >>/etc/pacman.conf
+  echo "" >>/etc/pacman.conf && \
+  curl -O https://blackarch.org/strap.sh && \
+  echo 26849980b35a42e6e192c6d9ed8c46f0d6d06047 strap.sh | sha1sum -c && \
+  chmod +x strap.sh && \
+  sudo ./strap.sh && \
+  rm -rf strap.sh && \
+  sudo sed -i 's/^#Server = https/Server = https/g' /etc/pacman.d/blackarch-mirrorlist && \
+  sudo pacman -Syyu
 
 RUN pacman -Syyu --noprogressbar --noconfirm --quiet yay alsa-utils archiso audit aurutils autoconf b43-fwcutter base base-devel bcachefs-tools btrfs-progs ca-certificates cloud-init cmake curl darkhttpd devtools diffutils docker docker-buildx docker-compose dosfstools fakeroot file git git-lfs glibc-locales gnu-netcat gnupg grep gzip jq less lib32-readline lib32-zlib linux linux-atm linux-firmware linux-firmware-marvell lsb-release lsof make man man-db man-pages mariadb mariadb-clients mkinitcpio mkinitcpio-archiso mkinitcpio-firmware mkinitcpio-nfs-utils mtools namcap nano net-tools openssh openssl parallel pkgconf postgresql-libs python python-apprise reflector retry rsync shellcheck sof-firmware sqlite squashfs-tools sudo syslinux systemd-resolvconf tar tzdata unzip vim wget wireless_tools wireless-regdb yq zip zsync openmp upx optipng svgo polly paru reflector rsync curl wget git-lfs openssh devtools git lib32-readline lib32-zlib namcap fakeroot audit grep diffutils parallel
 
