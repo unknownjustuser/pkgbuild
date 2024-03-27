@@ -22,9 +22,8 @@ task:
     ls -al repo
     cd /home/cirrusci/pkgbuild/
     chmod +x main.sh
-    ./main.sh setup
+    ./main.sh setup &> /dev/null
   build_push_script: |
-    ./main.sh build-txt
-    sudo pacman -Rc --noprogressbar --noconfirm jack2
-    ./main.sh build-pkgbuild
-    ./main.sh push
+    ./main.sh build-txt &> /dev/null
+    ./main.sh build-pkgbuild &> /dev/null
+    ./main.sh push &> /dev/null

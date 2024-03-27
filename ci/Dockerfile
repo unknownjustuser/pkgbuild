@@ -6,6 +6,8 @@ LABEL maintainer="unknownjustuser <unknown.just.user@proton.me>"
 
 ENV PATH="/home/cirrusci/bin:/home/cirrusci/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/core_perl:$PATH"
 
+ENV TERM=dumb
+
 RUN sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /etc/locale.gen && \
   locale-gen && \
   echo "LANG=en_US.UTF-8" > /etc/locale.conf && \
@@ -23,11 +25,12 @@ RUN pacman -Syy && \
 
 RUN pacman -Syy --noconfirm --needed --noprogressbar wget && \
   bash <(wget -qO- https://blackarch.org/strap.sh) && \
+  sed -i 's|^#Server = https|Server = https|g' /etc/pacman.d/blackarch-mirrorlist && \
   pacman -Syyu --noconfirm --needed --noprogressbar
 
-RUN pacman -Syyu --noprogressbar --noconfirm yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnu-netcat gnupg grep gzip jq less lib32-readline lib32-zlib linux linux-atm linux-firmware linux-firmware-marvell lsof make man man-db man-pages mkinitcpio mkinitcpio-archiso mkinitcpio-firmware mkinitcpio-nfs-utils mtools namcap nano net-tools openssh openssl parallel pkgconf python python-apprise python-pip reflector retry rsync shellcheck sof-firmware squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel lsb-release cronie
+RUN pacman -Syy --noprogressbar --noconfirm yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnupg grep gzip jq less make man namcap openssh openssl parallel pkgconf python python-apprise python-pip rsync squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel cronie
 
-RUN sed -i 's|^NoProgressBar|#NoProgressBar|g' /etc/pacman.conf
+# RUN sed -i 's|^NoProgressBar|#NoProgressBar|g' /etc/pacman.conf
 RUN groupadd --gid=1002 cirrusci
 RUN	useradd --uid=1001 --gid=cirrusci --create-home cirrusci
 RUN	echo "cirrusci ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/50-cirrusci
