@@ -6,7 +6,7 @@ task:
     image: archlinux:latest
     cpu: 4
     memory: 16G
-  setup_settings_docker: |
+  setup_settings_script: |
     PATH="/home/cirrusci/bin:/home/cirrusci/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/core_perl:$PATH"
 
     sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /etc/locale.gen
@@ -44,7 +44,7 @@ task:
     sudo -u cirrusci touch /home/cirrusci/.gitconfig
     pacman -Scc --noconfirm
     pacman -Syy
-  build_setup_setting: |
+  build_setup_script: |
     sudo -u cirrusci '
     cd /home/cirrusci
     sudo chown -R cirrusci:cirrusci .*
@@ -61,7 +61,7 @@ task:
     chmod +x main.sh
     ./main.sh setup
     '
-  build_&_push: |
+  build_push_script: |
     sudo -u cirrusci '
     ./main.sh build-txt
     sudo pacman -Rc --noprogressbar --noconfirm jack2
