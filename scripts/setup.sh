@@ -48,7 +48,7 @@ SudoLoop
 CleanAfter
 
 LocalRepo
-Chroot
+#Chroot
 Sign
 SignDb
 KeepRepoCache
