@@ -17,7 +17,7 @@ parucache="/home/cirrusci/.cache/paru/clone"
 current_date=$(date +"%Y-%m-%d")
 
 copy_pkg() {
-  for dir in "$packages/*" "$parucache/*" "$pkg_dir/*"; do
+  for dir in "$packages"/* "$parucache"/* "$pkg_dir"/*; do
     if [[ -n $(find "$dir" -maxdepth 1 -type f -name '*.pkg.tar.*') ]]; then
       cp -r "$dir"/*.pkg.tar.* "$pkg_dir/x86_64"
     fi
