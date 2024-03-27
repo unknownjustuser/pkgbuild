@@ -60,7 +60,7 @@ EOF
 
 setup_repo() {
   sudo chmod 777 *
-  sudo install -o "$USER" -d /var/cache/pacman/archfiery
+  sudo install -d /var/cache/pacman/archfiery --owner=cirrusci
   cp -r "$repo_dir"/x86_64/* "$pkg_dir"
 
   cd "$pkg_dir" || exit
