@@ -32,28 +32,28 @@ update-db() {
   ./update-db.sh
 }
 
-add_repo_lfs() {
-  cd "$repo_dir"
-  # Install Git LFS
-  git lfs install
-  # Configure Git attributes
-  cat >>.gitattributes <<EOF
-*.zst filter=lfs diff=lfs merge=lfs -text
-*.zst !text !filter !merge !diff
-EOF
-  # Track large packages with Git LFS
-  for package in "$repo_dir/x86_64"/*.pkg.tar.*; do
-    if [[ $(stat -c %s "$package") -gt 100000000 ]]; then
-      name=$(basename "$package")
-      echo "Tracking $name with Git LFS"
-      git lfs track "$name"
+# add_repo_lfs() {
+#   cd "$repo_dir"
+#   # Install Git LFS
+#   git lfs install
+#   # Configure Git attributes
+#   cat >>.gitattributes <<EOF
+# *.zst filter=lfs diff=lfs merge=lfs -text
+# *.zst !text !filter !merge !diff
+# EOF
+#   # Track large packages with Git LFS
+#   for package in "$repo_dir/x86_64"/*.pkg.tar.*; do
+#     if [[ $(stat -c %s "$package") -gt 100000000 ]]; then
+#       name=$(basename "$package")
+#       echo "Tracking $name with Git LFS"
+#       git lfs track "$name"
 
-      # Add the package and commit it
-      git add "$name"
-      git commit -m "Add $name built on $current_date"
-    fi
-  done
-}
+#       # Add the package and commit it
+#       git add "$name"
+#       git commit -m "Add $name built on $current_date"
+#     fi
+#   done
+# }
 
 push_repo_dir() {
   cd "$repo_dir" || exit
@@ -75,7 +75,7 @@ push_repo_dir() {
 main() {
   copy_pkg
   update-db
-  add_repo_lfs
+  # add_repo_lfs
   push_repo_dir
   # push_pkgbuild_repo
 }
