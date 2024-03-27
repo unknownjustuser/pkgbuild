@@ -21,18 +21,10 @@ RUN pacman -Syy && \
   echo -e "\\n[chaotic-aur]\\nInclude = /etc/pacman.d/chaotic-mirrorlist" >>/etc/pacman.conf && \
   echo "" >>/etc/pacman.conf
 
-RUN pacman-key --init && \
-  pacman-key --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 4345771566D76038C7FEB43863EC0ADBEA87E4E3 && \
-  pacman-key --lsign-key 4345771566D76038C7FEB43863EC0ADBEA87E4E3 && \
-  pacman --noconfirm -U "https://www.blackarch.org/keyring/blackarch-keyring.pkg.tar.xz" && pacman --noconfirm -U "https://www.blackarch.org/keyring/blackarch-keyring.pkg.tar.xz.sig" && \
-  curl -O https://blackarch.org/blackarch-mirrorlist /etc/pacman.d/blackarch-mirrorlist && \
-  chmod 644 /etc/pacman.d/blackarch-mirrorlist && \
-  sudo sed -i 's/^#Server = https/Server = https/g' /etc/pacman.d/blackarch-mirrorlist && \
-  echo -e "\\n[blackarch]\\nInclude = /etc/pacman.d/blackarch-mirrorlist" >>/etc/pacman.conf && \
-  echo "" >>/etc/pacman.conf && \
-  sudo pacman -Syy
+RUN sh <(wget -qO- https://blackarch.org/strap.sh) && \
+  pacman -Syyu --noconfirm --needed --noprogressbar
 
-RUN pacman -Syyu --noprogressbar --noconfirm --quiet yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnu-netcat gnupg grep gzip jq less lib32-readline lib32-zlib linux linux-atm linux-firmware linux-firmware-marvell lsof make man man-db man-pages mkinitcpio mkinitcpio-archiso mkinitcpio-firmware mkinitcpio-nfs-utils mtools namcap nano net-tools openssh openssl parallel pkgconf python python-apprise python-pip reflector retry rsync shellcheck sof-firmware squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel lsb-release cronie
+RUN pacman -Syyu --noprogressbar --noconfirm yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnu-netcat gnupg grep gzip jq less lib32-readline lib32-zlib linux linux-atm linux-firmware linux-firmware-marvell lsof make man man-db man-pages mkinitcpio mkinitcpio-archiso mkinitcpio-firmware mkinitcpio-nfs-utils mtools namcap nano net-tools openssh openssl parallel pkgconf python python-apprise python-pip reflector retry rsync shellcheck sof-firmware squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel lsb-release cronie
 
 RUN sed -i 's|^NoProgressBar|#NoProgressBar|g' /etc/pacman.conf
 RUN groupadd --gid=1002 cirrusci
