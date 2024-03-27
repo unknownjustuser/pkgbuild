@@ -48,7 +48,7 @@ DevelSuffixes = -git -cvs -svn -bzr -darcs -always -hg -fossil
 SudoLoop
 CleanAfter
 
-LocalRepo
+#LocalRepo
 #Chroot
 Sign
 #SignDb
