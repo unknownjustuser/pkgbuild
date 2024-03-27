@@ -8,10 +8,8 @@
 # Set flags to make robust
 set -euo pipefail
 
-# Get the directory path of the script
-script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
-
-packages_dir="$script_dir/../packages"
+pkgbuild_repo="/home/cirrusci/pkgbuild"
+packages_dir="$pkgbuild_repo/packages"
 
 removeconf() {
   for dir in "$packages_dir"/*/; do
@@ -30,7 +28,7 @@ removeconf() {
 
     if [[ ${#conflicts_installed[@]} -gt 0 ]]; then
       echo "Removing conflicting packages: ${conflicts_installed[*]}"
-      sudo paru -Rnsc --noconfirm --sudoloop "${conflicts_installed[@]}"
+      sudo paru -Rnsc --noconfirm --sudoloop --noprogressbar "${conflicts_installed[@]}"
     fi
 
     cd - || exit
