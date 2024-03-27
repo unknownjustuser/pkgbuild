@@ -15,8 +15,8 @@ setup_archfiery_gpg() {
   sudo chown -R cirrusci:cirrusci *
   gpg --import ~/*.asc
   sudo pacman-key --add ~/*.asc
-  rm -rf ~/*.asc
   sudo pacman-key --lsign-key 5357F2D3B5E38D00
+  rm -rf ~/*.asc
   sudo pacman -Syy
 }
 
