@@ -45,12 +45,12 @@ Devel
 Provides
 DevelSuffixes = -git -cvs -svn -bzr -darcs -always -hg -fossil
 SudoLoop
-#CleanAfter
+CleanAfter
 
-#LocalRepo
-#Chroot
+LocalRepo
+Chroot
 Sign
-#SignDb
+SignDb
 KeepRepoCache
 SkipReview
 

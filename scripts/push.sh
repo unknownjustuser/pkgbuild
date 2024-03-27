@@ -17,13 +17,12 @@ current_date=$(date +"%Y-%m-%d")
 copy_pkg() {
   cd "$repo_dir" || exit
 
-  for dir in "$packages"/*; do
-    cp -r "$dir"/*.pkg.tar.* "$repo_dir/x86_64"
+  for dir in "$packages"/* "$parucache"/*; do
+    if [[ -n $(find "$dir" -maxdepth 1 -type f -name '*.pkg.tar.*') ]]; then
+      cp -r "$dir"/*.pkg.tar.* "$repo_dir/x86_64"
+    fi
   done
 
-  for dir in "$parucache"/*; do
-    cp -r "$dir"/*.pkg.tar.* "$repo_dir/x86_64"
-  done
 }
 
 update-db() {
