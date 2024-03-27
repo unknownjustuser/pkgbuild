@@ -12,7 +12,8 @@ RUN sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /etc/locale.gen && \
   echo "KEYMAP=us" > /etc/vconsole.conf
 
 # Configure environment
-RUN pacman-key --init && \
+RUN pacman -Syy && \
+  pacman-key --init && \
   pacman-key --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 3056513887B78AEB && \
   pacman-key --lsign-key 3056513887B78AEB && \
   pacman --noconfirm -U 'https://geo-mirror.chaotic.cx/chaotic-aur/chaotic-'{keyring,mirrorlist}'.pkg.tar.zst' && \
@@ -23,7 +24,7 @@ RUN pacman-key --init && \
 RUN pacman-key --init && \
   pacman-key --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 4345771566D76038C7FEB43863EC0ADBEA87E4E3 && \
   pacman-key --lsign-key 4345771566D76038C7FEB43863EC0ADBEA87E4E3 && \
-  pacman --noconfirm -U "https://www.blackarch.org/keyring/blackarch-keyring.pkg.tar'{.xz,sig}'" && \
+  pacman --noconfirm -U "https://www.blackarch.org/keyring/blackarch-keyring.pkg.tar.xz" && pacman --noconfirm -U "https://www.blackarch.org/keyring/blackarch-keyring.pkg.tar.xz.sig" && \
   curl -O https://blackarch.org/blackarch-mirrorlist /etc/pacman.d/blackarch-mirrorlist && \
   chmod 644 /etc/pacman.d/blackarch-mirrorlist && \
   sudo sed -i 's/^#Server = https/Server = https/g' /etc/pacman.d/blackarch-mirrorlist && \
