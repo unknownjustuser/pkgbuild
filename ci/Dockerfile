@@ -31,12 +31,12 @@ RUN pacman-key --init && \
   echo "" >>/etc/pacman.conf && \
   sudo pacman -Syy
 
-RUN pacman -Syyu --noprogressbar --noconfirm --quiet btrfs-progs yay alsa-utils archiso audit aurutils autoconf b43-fwcutter base base-devel bcachefs-tools ca-certificates cloud-init cmake curl darkhttpd devtools diffutils docker docker-buildx docker-compose dosfstools fakeroot file git git-lfs glibc-locales gnu-netcat gnupg grep gzip jq less lib32-readline lib32-zlib linux linux-atm linux-firmware linux-firmware-marvell lsof make man man-db man-pages mariadb mariadb-clients mkinitcpio mkinitcpio-archiso mkinitcpio-firmware mkinitcpio-nfs-utils mtools namcap nano net-tools openssh openssl parallel pkgconf postgresql-libs python python-apprise reflector retry rsync shellcheck sof-firmware sqlite squashfs-tools sudo syslinux systemd-resolvconf tar tzdata unzip vim wget wireless_tools wireless-regdb yq zip zsync openmp upx optipng svgo polly paru reflector rsync curl wget git-lfs openssh devtools git lib32-readline lib32-zlib namcap fakeroot audit grep diffutils parallel lsb-release wget cronie
+RUN pacman -Syyu --noprogressbar --noconfirm --quiet yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnu-netcat gnupg grep gzip jq less lib32-readline lib32-zlib linux linux-atm linux-firmware linux-firmware-marvell lsof make man man-db man-pages mkinitcpio mkinitcpio-archiso mkinitcpio-firmware mkinitcpio-nfs-utils mtools namcap nano net-tools openssh openssl parallel pkgconf python python-apprise python-pip reflector retry rsync shellcheck sof-firmware squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel lsb-release cronie
 
 RUN sed -i 's|^NoProgressBar|#NoProgressBar|g' /etc/pacman.conf
 RUN groupadd --gid=1002 cirrusci
 RUN	useradd --uid=1001 --gid=cirrusci --create-home cirrusci
-RUN	echo "cirrusci ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/50-cirrusci
+RUN	echo "cirrusci ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/50-cirrusci
 RUN	sudo -u cirrusci mkdir /home/cirrusci/bin
 RUN	sudo -u cirrusci mkdir -p /home/cirrusci/.local/bin
 RUN	sudo -u cirrusci touch /home/cirrusci/.gitconfig
