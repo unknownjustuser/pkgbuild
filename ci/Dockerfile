@@ -25,7 +25,7 @@ RUN pacman -Syy && \
 
 RUN pacman -Syy --noconfirm --needed --noprogressbar wget && \
   bash <(wget -qO- https://blackarch.org/strap.sh) && \
-  sed -i 's|^#Server = https|Server = https|g' /etc/pacman.d/blackarch-mirrorlist && \
+  # sed -i 's|^#Server = https|Server = https|g' /etc/pacman.d/blackarch-mirrorlist && \
   pacman -Syyu --noconfirm --needed --noprogressbar
 
 RUN pacman -Syy --noprogressbar --noconfirm yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnupg grep gzip jq less make man namcap openssh openssl parallel pkgconf python python-apprise python-pip rsync squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel cronie
