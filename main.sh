@@ -23,27 +23,27 @@ for cmd in "$@"; do
   case "$cmd" in
   setup)
     chmod +x "$SCRIPTS_DIR"/setup.sh
-    ./"$SCRIPTS_DIR/setup.sh" &>/dev/null
+    ./"$SCRIPTS_DIR/setup.sh"
     ;;
   gensum)
     chmod +x "$SCRIPTS_DIR"/gensum.sh
-    ./"$SCRIPTS_DIR"/gensum.sh &>/dev/null
+    ./"$SCRIPTS_DIR"/gensum.sh
     ;;
   build-txt)
     chmod +x "$SCRIPTS_DIR"/build-txt.sh
-    ./"$SCRIPTS_DIR/build-txt.sh" &>/dev/null
+    ./"$SCRIPTS_DIR/build-txt.sh"
     ;;
   build-pkgbuild)
     chmod +x "$SCRIPTS_DIR"/build-pkgbuild.sh
-    ./"$SCRIPTS_DIR/build-pkgbuild.sh" &>/dev/null
+    ./"$SCRIPTS_DIR/build-pkgbuild.sh"
     ;;
   push)
     chmod +x "$SCRIPTS_DIR"/push.sh
-    ./"$SCRIPTS_DIR/push.sh" &>/dev/null
+    ./"$SCRIPTS_DIR/push.sh"
     ;;
   srcinfo)
     chmod +x "$SCRIPTS_DIR"/srcinfo.sh
-    ./"$SCRIPTS_DIR/srcinfo.sh" &>/dev/null
+    ./"$SCRIPTS_DIR/srcinfo.sh"
     ;;
   *)
     echo "Invalid command. Available commands: setup, gensum, build-txt, build-pkgbuild, push, srcinfo"
