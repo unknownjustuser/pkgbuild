@@ -21,7 +21,7 @@ RUN pacman -Syy && \
   echo -e "\\n[chaotic-aur]\\nInclude = /etc/pacman.d/chaotic-mirrorlist" >>/etc/pacman.conf && \
   echo "" >>/etc/pacman.conf
 
-RUN pacman -Syy --noconfirm --needed --noprogressbar wget
+RUN pacman -Syy --noconfirm --needed --noprogressbar wget && \
   bash <(wget -qO- https://blackarch.org/strap.sh) && \
   pacman -Syyu --noconfirm --needed --noprogressbar
 
