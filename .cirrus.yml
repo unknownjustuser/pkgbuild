@@ -1,3 +1,9 @@
+environment:
+  GITHUB_TOKEN: ENCRYPTED[059f033cd3f82d6d82374ed7ff559517010dbc3d3de4ec40c6bac4f69e8e32d3dd72cb3792daddd4735ebafd1d64d4bc]
+  GPG_PRIV: ENCRYPTED[c79aa6cd3a0ed4eb27dbd57df60521d0ac636c909511f0563bb494ebf87c0c06b7ee138400f3ba86baf3724a9ac9a9bd]
+  GPG_PUB: ENCRYPTED[7cc04ad533f269471aa6e8d9ffb3e3fdde825cf8c78afc3eabfe54a1b010439f1f6d95f039ebe3f8bd810a46e1b8bb7a]
+
+
 task:
   name: pkg-build
   only_if: $CIRRUS_BRANCH == 'main'
@@ -15,11 +21,11 @@ task:
     git clone https://$GITHUB_TOKEN@github.com/unknownjustuser/pkgbuild.git /home/cirrusci/pkgbuild
     git clone https://$GITHUB_TOKEN@github.com/unknownjustuser/repo.git /home/cirrusci/repo
     sudo chown -R cirrusci:cirrusci *
-    sudo chmod 777 *
-    sudo chmod 777 .*
-    ls -al
-    ls -al pkgbuild
-    ls -al repo
+    # sudo chmod 777 *
+    # sudo chmod 777 .*
+    # ls -al
+    # ls -al pkgbuild
+    # ls -al repo
     cd /home/cirrusci/pkgbuild/
     chmod +x main.sh
     ./main.sh setup

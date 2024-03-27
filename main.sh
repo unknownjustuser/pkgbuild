@@ -14,7 +14,7 @@ SCRIPTS_DIR="scripts"
 # Check if a command is provided
 if [[ $# -eq 0 ]]; then
   echo "Usage: $0 <command>"
-  echo "Available commands: setup, gensum, build-txt, build-pkgbuild, push, srcinfo"
+  echo "Available commands: setup, build-txt, build-pkgbuild, push, srcinfo"
   exit 1
 fi
 
@@ -24,10 +24,6 @@ for cmd in "$@"; do
   setup)
     chmod +x "$SCRIPTS_DIR"/setup.sh
     ./"$SCRIPTS_DIR/setup.sh"
-    ;;
-  gensum)
-    chmod +x "$SCRIPTS_DIR"/gensum.sh
-    ./"$SCRIPTS_DIR"/gensum.sh
     ;;
   build-txt)
     chmod +x "$SCRIPTS_DIR"/build-txt.sh
@@ -46,7 +42,7 @@ for cmd in "$@"; do
     ./"$SCRIPTS_DIR/srcinfo.sh"
     ;;
   *)
-    echo "Invalid command. Available commands: setup, gensum, build-txt, build-pkgbuild, push, srcinfo"
+    echo "Invalid command. Available commands: setup, build-txt, build-pkgbuild, push, srcinfo"
     exit 1
     ;;
   esac

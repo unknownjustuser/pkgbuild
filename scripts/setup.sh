@@ -2,6 +2,7 @@
 # shellcheck disable=SC2035
 
 repo_dir="/home/cirrusci/repo"
+pkg_dir="/var/cache/pacman/archfiery"
 # x86_64_dir="$repo_dir/x86_64"
 
 install_deps() {
@@ -10,8 +11,8 @@ install_deps() {
 }
 
 setup_archfiery_gpg() {
-  echo "$GPG_PRIV" >~/priv.asc
-  echo "$GPG_PUB" >~/pub.asc
+  echo $GPG_PRIV >~/priv.asc
+  echo $GPG_PUB >~/pub.asc
   sudo chown -R cirrusci:cirrusci *
   gpg --import ~/*.asc
   sudo pacman-key --add ~/*.asc
@@ -50,7 +51,7 @@ CleanAfter
 LocalRepo
 #Chroot
 Sign
-SignDb
+#SignDb
 KeepRepoCache
 SkipReview
 
@@ -59,7 +60,9 @@ EOF
 
 setup_repo() {
   sudo chmod 777 *
-  cd "$repo_dir/x86_64" || exit
+  cp -r "$repo_dir/x86_64/*" "$pkg_dir"
+
+  cd "$pkg_dir" || exit
 
   for pattern in *.{db,db.sig,db.tar.gz,db.tar.gz.sig,files,files.sig,files.tar.gz,files.tar.gz.sig,old}; do
     rm -f "$pattern"
@@ -72,13 +75,13 @@ setup_repo() {
     fi
   }
 
-  remove_if_exists "$repo_dir/x86_64/*.pkg.tar.zst"
+  remove_if_exists "$pkg_dir/*.pkg.tar.zst"
   repo-add --verify --sign archfiery_repo.db.tar.gz *.pkg.tar.zst
 
-  remove_if_exists "$repo_dir/x86_64/*.pkg.tar.gz"
+  remove_if_exists "$pkg_dir/*.pkg.tar.gz"
   repo-add --verify --sign archfiery_repo.db.tar.gz *.pkg.tar.gz
 
-  remove_if_exists "$repo_dir/x86_64/*.pkg.tar.xz"
+  remove_if_exists "$pkg_dir/*.pkg.tar.xz"
   repo-add --verify --sign archfiery_repo.db.tar.gz *.pkg.tar.xz
 
   sudo chmod 777 *
@@ -88,12 +91,12 @@ setup_repo() {
 
 [options]
 CacheDir = /var/cache/pacman/pkg
-CacheDir = /home/cirrusci/repo/x86_64
+CacheDir = /var/cache/pacman/archfiery
 CleanMethod = KeepCurrent
 
 [archfiery_repo]
 SigLevel = Required DatabaseOptional
-Server = file:///home/cirrusci/repo/x86_64
+Server = file:///var/cache/pacman/archfiery
 
 EOF
 
