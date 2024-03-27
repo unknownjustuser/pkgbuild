@@ -11,8 +11,8 @@ install_deps() {
 }
 
 setup_archfiery_gpg() {
-  echo $GPG_PRIV >~/priv.asc
-  echo $GPG_PUB >~/pub.asc
+  echo "$GPG_PRIV" >~/priv.asc
+  echo "$GPG_PUB" >~/pub.asc
   sudo chown -R cirrusci:cirrusci *
   gpg --import ~/*.asc
   sudo pacman-key --add ~/*.asc
@@ -60,7 +60,7 @@ EOF
 
 setup_repo() {
   sudo chmod 777 *
-  sudo install -o $USER -d /var/cache/pacman/archfiery
+  sudo install -o "$USER" -d /var/cache/pacman/archfiery
   cp -r "$repo_dir"/x86_64/* "$pkg_dir"
 
   cd "$pkg_dir" || exit
