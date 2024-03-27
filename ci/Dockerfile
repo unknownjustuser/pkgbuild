@@ -22,7 +22,7 @@ RUN pacman -Syy && \
   echo "" >>/etc/pacman.conf
 
 RUN pacman -Syy --noconfirm --needed --noprogressbar wget
-  sh <(wget -qO- https://blackarch.org/strap.sh) && \
+  bash <(wget -qO- https://blackarch.org/strap.sh) && \
   pacman -Syyu --noconfirm --needed --noprogressbar
 
 RUN pacman -Syyu --noprogressbar --noconfirm yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnu-netcat gnupg grep gzip jq less lib32-readline lib32-zlib linux linux-atm linux-firmware linux-firmware-marvell lsof make man man-db man-pages mkinitcpio mkinitcpio-archiso mkinitcpio-firmware mkinitcpio-nfs-utils mtools namcap nano net-tools openssh openssl parallel pkgconf python python-apprise python-pip reflector retry rsync shellcheck sof-firmware squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel lsb-release cronie
