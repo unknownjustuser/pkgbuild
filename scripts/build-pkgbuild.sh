@@ -9,8 +9,7 @@
 set -euo pipefail
 
 pkgbuild_repo="/home/cirrusci/pkgbuild"
-# packages_dir="$pkgbuild_repo/packages"
-packages_dir="$pkgbuild_repo/xero-meta-pkgbuild"
+packages_dir="$pkgbuild_repo/packages"
 
 removeconf() {
   for dir in "$packages_dir"/*/; do

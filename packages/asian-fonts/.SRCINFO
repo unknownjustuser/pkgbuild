@@ -15,6 +15,6 @@ pkgbase = asian-fonts
 	depends = ttf-khmer
 	depends = ttf-tibetan-machine
 	source = 90-bengali.conf
-	sha256sums = 298b598553e88e1d905748a19ed2ecc00dd6845a8e7213c87d84dcfca57ddee6
+	sha256sums = SKIP
 
 pkgname = asian-fonts

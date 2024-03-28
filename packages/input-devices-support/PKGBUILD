@@ -7,6 +7,7 @@ url="https://wiki.archlinux.org/index.php/Category:Input_devices"
 license=('GPL')
 pkgdesc="Meta package for input devices support."
 source=("libinput-gestures.desktop")
+sha256sums=('SKIP')
 depends=("android-udev"
 	"bolt"
 	"brightnessctl"
@@ -32,4 +33,3 @@ package() {
 	install -d "$pkgdir/etc/xdg/autostart"
 	cp -rf "$srcdir/libinput-gestures.desktop" "$pkgdir/etc/xdg/autostart"
 }
-sha256sums=('8ef41d26ce64c631b6e54ff99f345d7c803859b72faa523f7b388dcac70460f6')

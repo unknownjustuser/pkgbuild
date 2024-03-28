@@ -26,6 +26,6 @@ pkgbase = input-devices-support
 	optdepends = antimicrox: GUI for mapping keyboard keys to controller
 	optdepends = plasma-thunderbolt: Plasma integration for managing Thunderbolt devices
 	source = libinput-gestures.desktop
-	sha256sums = 8ef41d26ce64c631b6e54ff99f345d7c803859b72faa523f7b388dcac70460f6
+	sha256sums = SKIP
 
 pkgname = input-devices-support
