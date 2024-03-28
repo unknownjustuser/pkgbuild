@@ -11,52 +11,49 @@ set -euo pipefail
 pkgbuild_repo="$HOME/packages"
 
 removeconf() {
-    source ./PKGBUILD
+  source PKGBUILD
 
-    local all_conf=("${conflicts[@]}")
-    all_conf=("${all_conf[@]##*/}")
+  local all_conf=("${conflicts[@]}")
+  all_conf=("${all_conf[@]##*/}")
 
-    local conflicts_installed=()
-    for dep in "${all_conf[@]}"; do
-      if pacman -Qs "$dep" >/dev/null 2>&1; then
-        conflicts_installed+=("$dep")
-      fi
-    done
-
-    if [[ ${#conflicts_installed[@]} -gt 0 ]]; then
-      echo "Removing conflicting packages: ${conflicts_installed[*]}"
-      paru -Rnsc --noconfirm --noprogressbar "${conflicts_installed[@]}"
+  local conflicts_installed=()
+  for dep in "${all_conf[@]}"; do
+    if pacman -Qs "$dep" >/dev/null 2>&1; then
+      conflicts_installed+=("$dep")
     fi
+  done
 
-    cd - || exit
+  if [[ ${#conflicts_installed[@]} -gt 0 ]]; then
+    echo "Removing conflicting packages: ${conflicts_installed[*]}"
+    paru -Rnsc --noconfirm --noprogressbar "${conflicts_installed[@]}"
+  fi
+
+  cd - || exit
 }
 
 depsinstall() {
-    source ./PKGBUILD
+  source PKGBUILD
 
-    local all_deps=("${depends[@]}" "${makedepends[@]}")
-    all_deps=("${all_deps[@]##*/}")
+  local all_deps=("${depends[@]}" "${makedepends[@]}")
+  all_deps=("${all_deps[@]##*/}")
 
-    if [[ ${#all_deps[@]} -gt 0 ]]; then
-      echo "Installing dep packages: ${all_deps[*]}"
-      paru -S --noconfirm --needed --noprogressbar "${all_deps[@]}"
-    fi
+  if [[ ${#all_deps[@]} -gt 0 ]]; then
+    echo "Installing dep packages: ${all_deps[*]}"
+    paru -S --noconfirm --needed --noprogressbar "${all_deps[@]}"
+  fi
 
-    cd - || exit
+  cd - || exit
 }
 
 build_pkgbuild() {
   for dir in "$pkgbuild_repo"/*; do
-    if [[ -d "$dir" ]]; then
-      (
-        cd "$dir" || exit
-        removeconf
-        depsinstall
-        aur build --cleanbuild --sign --no-confirm --temp "$dir"
-        removeconf
-        depsinstall
-      )
-    fi
+    cd "$dir" || exit
+    removeconf
+    depsinstall
+    aur build --cleanbuild --sign --no-confirm --temp "$dir"
+    removeconf
+    depsinstall
+    cd - || exit
   done
 }
 
