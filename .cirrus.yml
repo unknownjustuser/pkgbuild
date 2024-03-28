@@ -36,7 +36,7 @@ task:
     chmod +x main.sh
     ./main.sh setup
   build_script: |
-    ./main.sh build-txt
     ./main.sh build-pkgbuild
+    ./main.sh build-txt
   push_script: |
     ./main.sh push
