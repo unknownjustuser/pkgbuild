@@ -34,10 +34,27 @@ removeconf() {
   done
 }
 
+depsinstall() {
+  for dir in "$pkgbuild_repo"/*/; do
+    cd "$dir" || exit
+    source ./PKGBUILD
+
+    local all_deps=("${depends[@]}" "${makedepends[@]}")
+    all_deps=("${all_deps[@]##*/}")
+
+    if [[ ${#all_deps[@]} -gt 0 ]]; then
+      echo "Installing dep packages: ${all_deps[*]}"
+      sudo paru -S --noconfirm --needed --sudoloop --noprogressbar "${all_deps[@]}"
+    fi
+
+    cd - || exit
+  done
+}
+
 build_pkgbuild() {
   for dir in "$pkgbuild_repo"/*; do
     if [[ -d "$dir" ]]; then
-      (cd "$dir" && removeconf && paru --nokeepsrc --noprogressbar --noconfirm --quiet --needed --failfast --build "$dir")
+      (cd "$dir" && removeconf && depsinstall && aur build --cleanbuild --sign --no-confirm --temp "$dir")
     fi
   done
 }
