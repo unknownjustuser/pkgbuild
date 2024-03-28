@@ -38,7 +38,7 @@ depsinstall() {
   all_deps=("${all_deps[@]##*/}")
 
   if [[ ${#all_deps[@]} -gt 0 ]]; then
-    echo "Installing dep packages: ${all_deps[*]}"
+    echo "Installing dep packages"
     paru -S --noconfirm --needed --noprogressbar "${all_deps[@]}"
   fi
 
@@ -52,7 +52,7 @@ removedeps() {
   all_deps=("${all_deps[@]##*/}")
 
   if [[ ${#all_deps[@]} -gt 0 ]]; then
-    echo "Removing dep packages: ${all_deps[*]}"
+    echo "Removing dep packages"
     paru -Rnsc --noconfirm --needed --noprogressbar "${all_deps[@]}"
   fi
 
@@ -60,7 +60,7 @@ removedeps() {
 }
 
 build_pkgbuild() {
-  for dir in "$pkgbuild_repo"/*/; do
+  for dir in *; do
     cd "$dir" || exit
     removeconf
     depsinstall
@@ -72,7 +72,8 @@ build_pkgbuild() {
 
 # Main script
 main() {
+  cd "$pkgbuild_repo"
   build_pkgbuild
 }
 
-main "$@"
+main
