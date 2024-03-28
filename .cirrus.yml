@@ -30,19 +30,13 @@ task:
     pacman -Syyu --noconfirm --needed --noprogressbar
 
     pacman -Syy --noprogressbar --noconfirm yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnupg grep gzip jq less make man namcap openssh openssl parallel pkgconf python python-apprise python-pip rsync squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel cronie
-    groupadd --gid=1002 cirrusci
-    useradd --uid=1001 --gid=cirrusci cirrusci
-    echo "cirrusci ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/50-cirrusci
     pacman -Scc --noconfirm
     pacman -Syy
 
-    sudo -u cirrusci '
     cd $HOME
     mkdir $HOME/bin
     mkdir -p $HOME/.local/bin
     touch $HOME/.gitconfig
-    sudo chown -R cirrusci:cirrusci .*
-    sudo chown -R cirrusci:cirrusci *
     mkdir -p $HOME/.ssh
     echo "$SSH_PRIV_KEY" > $HOME/.ssh/id_ed25519
     chmod 600 $HOME/.ssh/id_ed25519
@@ -64,15 +58,15 @@ task:
     ls -al pkgbuild
     ls -al repo
     cd $HOME/pkgbuild/
-    chmod +x main.sh
-    ./main.sh setup
+    chmod +x *.sh
+    bash setup.sh
     '
   build_script: |
     sudo -u cirrusci '
-    ./main.sh build-pkgbuild
-    ./main.sh build-txt
+    bash build-pkgbuild.sh
+    bash build-txt.sh
     '
   push_script: |
     sudo -u cirrusci '
-    ./main.sh push
+    bash push.sh
     '
