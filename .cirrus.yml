@@ -31,16 +31,16 @@ task:
 
     pacman -Syy --noprogressbar --noconfirm yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnupg grep gzip jq less make man namcap openssh openssl parallel pkgconf python python-apprise python-pip rsync squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel cronie
     groupadd --gid=1002 cirrusci
-    useradd --uid=1001 --gid=cirrusci
+    useradd --uid=1001 --gid=cirrusci cirrusci
     echo "cirrusci ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/50-cirrusci
-    sudo -u cirrusci mkdir $HOME/bin
-    sudo -u cirrusci mkdir -p $HOME/.local/bin
-    sudo -u cirrusci touch $HOME/.gitconfig
     pacman -Scc --noconfirm
     pacman -Syy
 
     sudo -u cirrusci '
     cd $HOME
+    mkdir $HOME/bin
+    mkdir -p $HOME/.local/bin
+    touch $HOME/.gitconfig
     sudo chown -R cirrusci:cirrusci .*
     sudo chown -R cirrusci:cirrusci *
     mkdir -p $HOME/.ssh
