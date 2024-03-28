@@ -49,7 +49,7 @@ removedeps() {
 
   if [[ ${#all_deps[@]} -gt 0 ]]; then
     echo "Removing dep packages"
-    paru -Rnsc --noconfirm --needed --noprogressbar "${all_deps[@]}"
+    paru -Rnsc --noconfirm --noprogressbar "${all_deps[@]}"
   fi
 }
 
