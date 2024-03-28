@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck disable=SC2035
 
-pkg_dir="/var/cache/pacman/archfiery_repo"
+pkg_dir="/home/builder/repo"
 
 install_deps() {
   # Update the system and install essential x86_64
@@ -58,11 +58,6 @@ EOF
 
 setup_repo() {
   sudo chmod 777 *
-  sudo install -d "$pkg_dir" --owner=builder
-  sudo chmod 777 "$pkg_dir"
-  git clone git@github.com:unknownjustuser/repo.git "$pkg_dir"
-  sudo chmod 777 "$pkg_dir"
-  sudo chmod 777 "$pkg_dir"/*
 
   cd "$pkg_dir" || exit
 
@@ -86,24 +81,24 @@ setup_repo() {
   remove_if_exists "$pkg_dir/*.pkg.tar.xz"
   repo-add --verify --sign archfiery_repo.db.tar.gz *.pkg.tar.xz
 
-  sudo chmod 777 *
+  # sudo chmod 777 *
   cd - || exit
 
-  sudo tee -a /etc/pacman.conf <<EOF
+#   sudo tee -a /etc/pacman.conf <<EOF
 
-[options]
-CacheDir = /var/cache/pacman/pkg
-CacheDir = /var/cache/pacman/archfiery_repo
-CleanMethod = KeepCurrent
+# [options]
+# CacheDir = /var/cache/pacman/pkg
+# CacheDir = /var/cache/pacman/archfiery_repo
+# CleanMethod = KeepCurrent
 
-[archfiery_repo]
-SigLevel = Required DatabaseOptional
-Server = file:///var/cache/pacman/archfiery_repo
+# [archfiery_repo]
+# SigLevel = Required DatabaseOptional
+# Server = file:///var/cache/pacman/archfiery_repo
 
-EOF
+# EOF
 
-  ls -al "$pkg_dir"
-  ls -al "$pkg_dir/x86_64"
+  # ls -al "$pkg_dir"
+  # ls -al "$pkg_dir/x86_64"
 
   sudo pacman -Syy
 }

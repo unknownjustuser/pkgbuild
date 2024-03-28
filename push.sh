@@ -9,13 +9,13 @@
 set -euo pipefail
 
 # Lowercase variable names
-pkg_dir="/var/cache/pacman/archfiery_repo"
+pkg_dir="/home/builder/repo"
 pkgbuild_repo="$HOME/packages"
 parucache="$HOME/.cache/paru/clone"
 current_date=$(date +"%Y-%m-%d")
 
 copy_pkg() {
-  for dir in "$pkgbuild_repo"/*/ "$parucache"/*/ "$pkg_dir"/*/; do
+  for dir in "$pkgbuild_repo"/*/ "$parucache"/*/; do
     if [[ -n $(find "$dir" -maxdepth 1 -type f -name '*.pkg.tar.*') ]]; then
       cp -r "$dir"/*.pkg.tar.* "$pkg_dir/x86_64"
     fi

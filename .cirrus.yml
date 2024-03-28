@@ -8,7 +8,6 @@ task:
     memory: 16G
   env:
     CIRRUS_WORKING_DIR: /home/builder
-    CIRRUS_USER_PERMISSION: write
   setup_script: |
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
@@ -19,6 +18,9 @@ task:
     echo "$SSH_PRIV_KEY" > "$HOME"/.ssh/id_ed25519
     chmod 600 "$HOME"/.ssh/id_ed25519
     ssh-keyscan github.com > "$HOME"/.ssh/known_hosts
+    git clone git@github.com:unknownjustuser/repo.git repo
+    sudo chown -R builder:builder .*
+    sudo chown -R builder:builder *
     sudo chmod 777 *
     ls -al
     chmod +x *.sh
