@@ -27,7 +27,7 @@ removeconf() {
 
     if [[ ${#conflicts_installed[@]} -gt 0 ]]; then
       echo "Removing conflicting packages: ${conflicts_installed[*]}"
-      sudo paru -Rnsc --noconfirm --sudoloop --noprogressbar "${conflicts_installed[@]}"
+      paru -Rnsc --noconfirm --noprogressbar "${conflicts_installed[@]}"
     fi
 
     cd - || exit
@@ -44,7 +44,7 @@ depsinstall() {
 
     if [[ ${#all_deps[@]} -gt 0 ]]; then
       echo "Installing dep packages: ${all_deps[*]}"
-      sudo paru -S --noconfirm --needed --noprogressbar "${all_deps[@]}"
+      paru -S --noconfirm --needed --noprogressbar "${all_deps[@]}"
     fi
 
     cd - || exit
