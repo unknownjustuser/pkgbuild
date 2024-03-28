@@ -6,6 +6,8 @@ task:
     image: mikuxdev/archlinux-pkgbuild:latest
     cpu: 4
     memory: 16G
+  env:
+    CIRRUS_WORKING_DIR: /home/builder
   setup_script: |
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
