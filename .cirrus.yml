@@ -19,7 +19,13 @@ task:
     sudo chown -R cirrusci:cirrusci .*
     sudo chown -R cirrusci:cirrusci *
     git clone git@github.com:unknownjustuser/pkgbuild.git /home/cirrusci/pkgbuild
+    cd /home/cirrusci/pkgbuild
+    git checkout -f
+    cd -
     git clone git@github.com:unknownjustuser/repo.git /home/cirrusci/repo
+    cd /home/cirrusci/repo
+    git checkout -f
+    cd -
     sudo chown -R cirrusci:cirrusci .*
     sudo chown -R cirrusci:cirrusci *
     sudo chmod 777 *
