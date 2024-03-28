@@ -45,14 +45,27 @@ depsinstall() {
   cd - || exit
 }
 
+removedeps() {
+  source PKGBUILD
+
+  local all_deps=("${depends[@]}" "${makedepends[@]}")
+  all_deps=("${all_deps[@]##*/}")
+
+  if [[ ${#all_deps[@]} -gt 0 ]]; then
+    echo "Removing dep packages: ${all_deps[*]}"
+    paru -Rnsc --noconfirm --needed --noprogressbar "${all_deps[@]}"
+  fi
+
+  cd - || exit
+}
+
 build_pkgbuild() {
-  for dir in "$pkgbuild_repo"/*; do
+  for dir in "$pkgbuild_repo"/*/; do
     cd "$dir" || exit
     removeconf
     depsinstall
     aur build --cleanbuild --sign --no-confirm --temp "$dir"
-    removeconf
-    depsinstall
+    removedeps
     cd - || exit
   done
 }
