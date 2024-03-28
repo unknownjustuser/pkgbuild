@@ -9,15 +9,13 @@
 set -euo pipefail
 
 # Lowercase variable names
-pkg_dir="/var/cache/pacman/archfiery"
-repo_dir="$HOME/repo"
-pkgbuild_repo="$HOME/pkgbuild"
-packages="$pkgbuild_repo/packages"
+pkg_dir="/var/cache/pacman/archfiery_repo"
+pkgbuild_repo="$HOME/packages"
 parucache="$HOME/.cache/paru/clone"
 current_date=$(date +"%Y-%m-%d")
 
 copy_pkg() {
-  for dir in "$packages"/*/ "$parucache"/*/ "$pkg_dir"/*/; do
+  for dir in "$pkgbuild_repo"/*/ "$parucache"/*/ "$pkg_dir"/*/; do
     if [[ -n $(find "$dir" -maxdepth 1 -type f -name '*.pkg.tar.*') ]]; then
       cp -r "$dir"/*.pkg.tar.* "$pkg_dir/x86_64"
     fi
@@ -25,14 +23,14 @@ copy_pkg() {
 }
 
 update-db() {
-  cd "$repo_dir/x86_64" || exit
+  cd "$pkg_dir/x86_64" || exit
   chmod +x update-db.sh
   ./update-db.sh
   cd - || exit
 }
 
 push_repo_dir() {
-  cd "$repo_dir" || exit
+  cd "$pkg_dir" || exit
   git add .
   git add *
   git commit -m "Packages builded on $current_date"

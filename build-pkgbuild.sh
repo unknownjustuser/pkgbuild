@@ -8,11 +8,10 @@
 # Set flags to make robust
 set -euo pipefail
 
-pkgbuild_repo="$HOME/pkgbuild"
-packages_dir="$pkgbuild_repo/packages"
+pkgbuild_repo="$HOME/packages"
 
 removeconf() {
-  for dir in "$packages_dir"/*/; do
+  for dir in "$pkgbuild_repo"/*/; do
     cd "$dir" || exit
     source ./PKGBUILD
 
@@ -36,7 +35,7 @@ removeconf() {
 }
 
 build_pkgbuild() {
-  for dir in "$packages_dir"/*; do
+  for dir in "$pkgbuild_repo"/*; do
     if [[ -d "$dir" ]]; then
       (cd "$dir" && removeconf && paru --nokeepsrc --noprogressbar --noconfirm --quiet --needed --failfast --build "$dir")
     fi

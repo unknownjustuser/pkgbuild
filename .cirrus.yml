@@ -12,30 +12,16 @@ task:
   setup_script: |
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
-    mkdir $HOME/bin
-    mkdir -p $HOME/.local/bin
-    touch $HOME/.gitconfig
-    mkdir -p $HOME/.ssh
-    echo "$SSH_PRIV_KEY" > $HOME/.ssh/id_ed25519
-    chmod 600 $HOME/.ssh/id_ed25519
-    ssh-keyscan github.com > $HOME/.ssh/known_hosts
-    sudo chown -R builder:builder .*
-    sudo chown -R builder:builder *
-    git clone git@github.com:unknownjustuser/pkgbuild.git $HOME/pkgbuild
-    cd $HOME/pkgbuild
-    git checkout -f
-    cd -
-    git clone git@github.com:unknownjustuser/repo.git $HOME/repo
-    cd $HOME/repo
-    git checkout -f
-    cd -
-    sudo chown -R builder:builder .*
-    sudo chown -R builder:builder *
-    sudo chmod 777 *
+    mkdir "$HOME"/bin
+    mkdir -p "$HOME"/.local/bin
+    touch "$HOME"/.gitconfig
+    mkdir -p "$HOME"/.ssh
+    echo "$SSH_PRIV_KEY" > "$HOME"/.ssh/id_ed25519
+    chmod 600 "$HOME"/.ssh/id_ed25519
+    ssh-keyscan github.com > "$HOME"/.ssh/known_hosts
+    # sudo chmod 777 *
     ls -al
-    ls -al pkgbuild
-    ls -al repo
-    cd $HOME/pkgbuild/
+    ls -al /var/cache/pacman/archfiery_repo
     chmod +x *.sh
     bash setup.sh
   build_script: |

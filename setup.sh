@@ -1,9 +1,7 @@
 #!/bin/bash
 # shellcheck disable=SC2035
 
-repo_dir="$HOME/repo"
-pkg_dir="/var/cache/pacman/archfiery"
-# x86_64_dir="$repo_dir/x86_64"
+pkg_dir="/var/cache/pacman/archfiery_repo"
 
 install_deps() {
   # Update the system and install essential x86_64
@@ -61,7 +59,7 @@ EOF
 setup_repo() {
   sudo chmod 777 *
   sudo install -d /var/cache/pacman/archfiery --owner=builder
-  cp -r "$repo_dir"/x86_64/* "$pkg_dir"
+  git clone git@github.com:unknownjustuser/repo.git /var/cache/pacman/archfiery_repo
 
   cd "$pkg_dir" || exit
 
@@ -92,22 +90,22 @@ setup_repo() {
 
 [options]
 CacheDir = /var/cache/pacman/pkg
-CacheDir = /var/cache/pacman/archfiery
+CacheDir = /var/cache/pacman/archfiery_repo
 CleanMethod = KeepCurrent
 
 [archfiery_repo]
 SigLevel = Required DatabaseOptional
-Server = file:///var/cache/pacman/archfiery
+Server = file:///var/cache/pacman/archfiery_repo
 
 EOF
 
-  ls -al "$repo_dir/x86_64"
+  ls -al "$pkg_dir/x86_64"
 
   sudo pacman -Syy
 }
 
 setup_git() {
-  cat >>$HOME/.gitconfig <<EOF
+  cat >>"$HOME"/.gitconfig <<EOF
 [user]
 	email = unknown.just.user@proton.me
 	name = unknownjustuser

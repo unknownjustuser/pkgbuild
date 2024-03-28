@@ -7,13 +7,12 @@
 
 # Set flags to make robust
 set -euo pipefail
-pkgbuild_repo="$HOME/pkgbuild"
-packages_dir="$pkgbuild_repo/packages"
+pkgbuild_repo="$HOME/packages"
 
 txt() {
   while IFS= read -r line; do
     paru -Sy --nokeepsrc --noprogressbar --noconfirm --quiet --needed --failfast "$line"
-  done <"$packages_dir"/*.txt
+  done <"$pkgbuild_repo"/*.txt
 }
 
 # Main script
