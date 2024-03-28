@@ -11,7 +11,7 @@ set -euo pipefail
 pkgbuild_repo="$HOME/packages"
 
 removeconf() {
-  source PKGBUILD
+  source ./PKGBUILD
 
   local all_conf=("${conflicts[@]}")
   all_conf=("${all_conf[@]##*/}")
@@ -27,12 +27,10 @@ removeconf() {
     echo "Removing conflicting packages: ${conflicts_installed[*]}"
     paru -Rnsc --noconfirm --noprogressbar "${conflicts_installed[@]}"
   fi
-
-  cd - || exit
 }
 
 depsinstall() {
-  source PKGBUILD
+  source ./PKGBUILD
 
   local all_deps=("${depends[@]}" "${makedepends[@]}")
   all_deps=("${all_deps[@]##*/}")
@@ -41,12 +39,10 @@ depsinstall() {
     echo "Installing dep packages"
     paru -S --noconfirm --needed --noprogressbar "${all_deps[@]}"
   fi
-
-  cd - || exit
 }
 
 removedeps() {
-  source PKGBUILD
+  source ./PKGBUILD
 
   local all_deps=("${depends[@]}" "${makedepends[@]}")
   all_deps=("${all_deps[@]##*/}")
@@ -55,18 +51,16 @@ removedeps() {
     echo "Removing dep packages"
     paru -Rnsc --noconfirm --needed --noprogressbar "${all_deps[@]}"
   fi
-
-  cd - || exit
 }
 
 build_pkgbuild() {
   for dir in *; do
-    cd "$dir" || exit
+    pushd "$dir" || exit
     removeconf
     depsinstall
     aur build --cleanbuild --sign --no-confirm --temp "$dir"
     removedeps
-    cd - || exit
+    popd || exit
   done
 }
 

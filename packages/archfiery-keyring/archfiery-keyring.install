@@ -1,9 +1,9 @@
 post_upgrade() {
 	if usr/bin/pacman-key -l >/dev/null 2>&1; then
-		usr/bin/pacman-key --populate archfiery
+		usr/bin/pacman-key --populate archfiery_repo
 	else
 		echo " >>> Run \`pacman-key --init\` to set up your pacman keyring."
-		echo " >>> Then run \`pacman-key --populate archfiery\` to install the ArchFiery keyring."
+		echo " >>> Then run \`pacman-key --populate archfiery_repo\` to install the ArchFiery keyring."
 	fi
 }
 
