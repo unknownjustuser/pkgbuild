@@ -59,7 +59,8 @@ EOF
 setup_repo() {
   sudo chmod 777 *
 
-  cd "$pkg_dir" || exit
+  cd "$pkg_dir"/x86_64 || exit
+  sudo chmod 777 *
 
   for pattern in *.{db,db.sig,db.tar.gz,db.tar.gz.sig,files,files.sig,files.tar.gz,files.tar.gz.sig,old}; do
     rm -f "$pattern"
@@ -81,24 +82,24 @@ setup_repo() {
   remove_if_exists "$pkg_dir/*.pkg.tar.xz"
   repo-add --verify --sign archfiery_repo.db.tar.gz *.pkg.tar.xz
 
-  # sudo chmod 777 *
+  sudo chmod 777 *
   cd - || exit
 
-#   sudo tee -a /etc/pacman.conf <<EOF
+  sudo tee -a /etc/pacman.conf <<EOF
 
-# [options]
-# CacheDir = /var/cache/pacman/pkg
-# CacheDir = /var/cache/pacman/archfiery_repo
-# CleanMethod = KeepCurrent
+[options]
+CacheDir = /var/cache/pacman/pkg
+CacheDir = /home/builder/repo/x86_64
+CleanMethod = KeepCurrent
 
-# [archfiery_repo]
-# SigLevel = Required DatabaseOptional
-# Server = file:///var/cache/pacman/archfiery_repo
+[archfiery_repo]
+SigLevel = Required DatabaseOptional
+Server = file:///home/builder/repo/x86_64
 
-# EOF
+EOF
 
-  # ls -al "$pkg_dir"
-  # ls -al "$pkg_dir/x86_64"
+  ls -al "$pkg_dir"
+  ls -al "$pkg_dir/x86_64"
 
   sudo pacman -Syy
 }
@@ -112,13 +113,6 @@ setup_git() {
 	defaultBranch = main
 [core]
 	autocrlf = false
-[merge]
-	tool = meld
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
 EOF
 }
 

@@ -16,7 +16,7 @@ removeconf() {
     source ./PKGBUILD
 
     local all_conf=("${conflicts[@]}")
-    all_conf=("${all_conf[@]##*/}") # Remove potential leading paths
+    all_conf=("${all_conf[@]##*/}")
 
     local conflicts_installed=()
     for dep in "${all_conf[@]}"; do
@@ -44,7 +44,7 @@ depsinstall() {
 
     if [[ ${#all_deps[@]} -gt 0 ]]; then
       echo "Installing dep packages: ${all_deps[*]}"
-      sudo paru -S --noconfirm --needed --sudoloop --noprogressbar "${all_deps[@]}"
+      sudo paru -S --noconfirm --needed --noprogressbar "${all_deps[@]}"
     fi
 
     cd - || exit
@@ -54,7 +54,14 @@ depsinstall() {
 build_pkgbuild() {
   for dir in "$pkgbuild_repo"/*; do
     if [[ -d "$dir" ]]; then
-      (cd "$dir" && removeconf && depsinstall && aur build --cleanbuild --sign --no-confirm --temp "$dir")
+      (
+        cd "$dir" || exit
+        removeconf
+        depsinstall
+        aur build --cleanbuild --sign --no-confirm --temp "$dir"
+        removeconf
+        depsinstall
+      )
     fi
   done
 }
