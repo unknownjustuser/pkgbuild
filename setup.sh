@@ -58,8 +58,9 @@ EOF
 
 setup_repo() {
   sudo chmod 777 *
-  sudo install -d /var/cache/pacman/archfiery_repo --owner=builder
-  git clone git@github.com:unknownjustuser/repo.git /var/cache/pacman/archfiery_repo
+  sudo install -d "$pkg_dir" --owner=builder
+  git clone git@github.com:unknownjustuser/repo.git "$pkg_dir"
+  sudo chmod 777 "$pkg_dir"
 
   cd "$pkg_dir" || exit
 
