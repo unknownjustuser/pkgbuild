@@ -11,8 +11,6 @@ set -euo pipefail
 pkgbuild_repo="$HOME/packages"
 
 removeconf() {
-  for dir in "$pkgbuild_repo"/*/; do
-    cd "$dir" || exit
     source ./PKGBUILD
 
     local all_conf=("${conflicts[@]}")
@@ -31,12 +29,9 @@ removeconf() {
     fi
 
     cd - || exit
-  done
 }
 
 depsinstall() {
-  for dir in "$pkgbuild_repo"/*/; do
-    cd "$dir" || exit
     source ./PKGBUILD
 
     local all_deps=("${depends[@]}" "${makedepends[@]}")
@@ -48,7 +43,6 @@ depsinstall() {
     fi
 
     cd - || exit
-  done
 }
 
 build_pkgbuild() {
