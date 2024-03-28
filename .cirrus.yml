@@ -21,7 +21,6 @@ task:
     ssh-keyscan github.com > "$HOME"/.ssh/known_hosts
     # sudo chmod 777 *
     ls -al
-    ls -al /var/cache/pacman/archfiery_repo
     chmod +x *.sh
     bash setup.sh
   build_script: |

@@ -99,6 +99,7 @@ Server = file:///var/cache/pacman/archfiery_repo
 
 EOF
 
+  ls -al /var/cache/pacman/archfiery_repo
   ls -al "$pkg_dir/x86_64"
 
   sudo pacman -Syy
