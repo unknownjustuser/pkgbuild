@@ -35,9 +35,8 @@ push_repo_dir() {
   cd "$repo_dir" || exit
   git add .
   git add *
-  git commit -m "Add built packages on $current_date"
-  # git remote set-url origin "https://$GITHUB_TOKEN@github.com/unknownjustuser/repo.git"
-  git push -u origin main
+  git commit -m "Packages builded on $current_date"
+  git push origin main
   cd - || exit
 }
 
