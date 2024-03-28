@@ -3,12 +3,43 @@ task:
   only_if: $CIRRUS_BRANCH == 'main'
   timeout_in: 120m
   container:
-    dockerfile: ci/Dockerfile
+    image: archlinux:latest
     cpu: 4
     memory: 16G
-  env:
-    CIRRUS_WORKING_DIR: /home/cirrusci
   setup_script: |
+    PATH="/home/cirrusci/bin:/home/cirrusci/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/core_perl:$PATH"
+
+    TERM=dumb
+
+    sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /etc/locale.gen
+    locale-gen
+    echo "LANG=en_US.UTF-8" > /etc/locale.conf
+    echo "KEYMAP=us" > /etc/vconsole.conf
+
+    pacman -Syy
+    pacman-key --init
+    pacman-key --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 3056513887B78AEB
+    pacman-key --lsign-key 3056513887B78AEB
+    pacman --noconfirm -U 'https://geo-mirror.chaotic.cx/chaotic-aur/chaotic-'{keyring,mirrorlist}'.pkg.tar.zst'
+    echo "[multilib]" >>/etc/pacman.conf && echo "Include = /etc/pacman.d/mirrorlist" >>/etc/pacman.conf
+    echo -e "\\n[chaotic-aur]\\nInclude = /etc/pacman.d/chaotic-mirrorlist" >>/etc/pacman.conf
+    echo "" >>/etc/pacman.conf
+
+    pacman -Syy --noconfirm --needed --noprogressbar wget bash
+    bash <(wget -qO- https://blackarch.org/strap.sh)
+    pacman -Syyu --noconfirm --needed --noprogressbar
+
+    pacman -Syy --noprogressbar --noconfirm yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnupg grep gzip jq less make man namcap openssh openssl parallel pkgconf python python-apprise python-pip rsync squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel cronie
+    groupadd --gid=1002 cirrusci
+    useradd --uid=1001 --gid=cirrusci --create-home cirrusci
+    echo "cirrusci ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/50-cirrusci
+    sudo -u cirrusci mkdir /home/cirrusci/bin
+    sudo -u cirrusci mkdir -p /home/cirrusci/.local/bin
+    sudo -u cirrusci touch /home/cirrusci/.gitconfig
+    pacman -Scc --noconfirm
+    pacman -Syy
+
+    sudo -u cirrusci '
     cd /home/cirrusci
     sudo chown -R cirrusci:cirrusci .*
     sudo chown -R cirrusci:cirrusci *
@@ -35,8 +66,13 @@ task:
     cd /home/cirrusci/pkgbuild/
     chmod +x main.sh
     ./main.sh setup
+    '
   build_script: |
+    sudo -u cirrusci '
     ./main.sh build-pkgbuild
     ./main.sh build-txt
+    '
   push_script: |
+    sudo -u cirrusci '
     ./main.sh push
+    '
