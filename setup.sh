@@ -59,8 +59,10 @@ EOF
 setup_repo() {
   sudo chmod 777 *
   sudo install -d "$pkg_dir" --owner=builder
+  sudo chmod 777 "$pkg_dir"
   git clone git@github.com:unknownjustuser/repo.git "$pkg_dir"
   sudo chmod 777 "$pkg_dir"
+  sudo chmod 777 "$pkg_dir"/*
 
   cd "$pkg_dir" || exit
 
