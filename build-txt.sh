@@ -7,7 +7,7 @@
 
 # Set flags to make robust
 set -euo pipefail
-pkgbuild_repo="$HOME/packages"
+pkgbuild_repo="$HOME"
 
 txt() {
   while IFS= read -r line; do
