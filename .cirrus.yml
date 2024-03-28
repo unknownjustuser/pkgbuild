@@ -7,7 +7,7 @@ task:
     cpu: 4
     memory: 16G
   setup_script: |
-    PATH="/home/cirrusci/bin:/home/cirrusci/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/core_perl:$PATH"
+    PATH="$HOME/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/core_perl:$PATH"
 
     TERM=dumb
 
@@ -31,30 +31,30 @@ task:
 
     pacman -Syy --noprogressbar --noconfirm yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnupg grep gzip jq less make man namcap openssh openssl parallel pkgconf python python-apprise python-pip rsync squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel cronie
     groupadd --gid=1002 cirrusci
-    useradd --uid=1001 --gid=cirrusci --create-home cirrusci
+    useradd --uid=1001 --gid=cirrusci
     echo "cirrusci ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/50-cirrusci
-    sudo -u cirrusci mkdir /home/cirrusci/bin
-    sudo -u cirrusci mkdir -p /home/cirrusci/.local/bin
-    sudo -u cirrusci touch /home/cirrusci/.gitconfig
+    sudo -u cirrusci mkdir $HOME/bin
+    sudo -u cirrusci mkdir -p $HOME/.local/bin
+    sudo -u cirrusci touch $HOME/.gitconfig
     pacman -Scc --noconfirm
     pacman -Syy
 
     sudo -u cirrusci '
-    cd /home/cirrusci
+    cd $HOME
     sudo chown -R cirrusci:cirrusci .*
     sudo chown -R cirrusci:cirrusci *
-    mkdir -p /home/cirrusci/.ssh
-    echo "$SSH_PRIV_KEY" > /home/cirrusci/.ssh/id_ed25519
-    chmod 600 /home/cirrusci/.ssh/id_ed25519
-    ssh-keyscan github.com > /home/cirrusci/.ssh/known_hosts
+    mkdir -p $HOME/.ssh
+    echo "$SSH_PRIV_KEY" > $HOME/.ssh/id_ed25519
+    chmod 600 $HOME/.ssh/id_ed25519
+    ssh-keyscan github.com > $HOME/.ssh/known_hosts
     sudo chown -R cirrusci:cirrusci .*
     sudo chown -R cirrusci:cirrusci *
-    git clone git@github.com:unknownjustuser/pkgbuild.git /home/cirrusci/pkgbuild
-    cd /home/cirrusci/pkgbuild
+    git clone git@github.com:unknownjustuser/pkgbuild.git $HOME/pkgbuild
+    cd $HOME/pkgbuild
     git checkout -f
     cd -
-    git clone git@github.com:unknownjustuser/repo.git /home/cirrusci/repo
-    cd /home/cirrusci/repo
+    git clone git@github.com:unknownjustuser/repo.git $HOME/repo
+    cd $HOME/repo
     git checkout -f
     cd -
     sudo chown -R cirrusci:cirrusci .*
@@ -63,7 +63,7 @@ task:
     ls -al
     ls -al pkgbuild
     ls -al repo
-    cd /home/cirrusci/pkgbuild/
+    cd $HOME/pkgbuild/
     chmod +x main.sh
     ./main.sh setup
     '

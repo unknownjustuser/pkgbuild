@@ -22,7 +22,7 @@ LOCALPKG="$HOME/archfiery-pkgbuild/packages"
 TXT_FILE=$(find "$PKGSTXT" -maxdepth 1 -type f -name "*.txt" | head -n 1)
 
 # Check if a *.txt file is found
-if [ -z "$TXT_FILE" ]; then
+if [[ -z "$TXT_FILE" ]]; then
   echo "Error: No *.txt file found in $HOME"
   exit 1
 fi

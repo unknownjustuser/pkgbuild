@@ -8,7 +8,7 @@
 # Set flags to make robust
 set -euo pipefail
 
-pkgbuild_repo="/home/cirrusci/pkgbuild"
+pkgbuild_repo="$HOME/pkgbuild"
 packages_dir="$pkgbuild_repo/packages"
 
 removeconf() {

@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck disable=SC2035
 
-repo_dir="/home/cirrusci/repo"
+repo_dir="$HOME/repo"
 pkg_dir="/var/cache/pacman/archfiery"
 # x86_64_dir="$repo_dir/x86_64"
 
@@ -107,7 +107,7 @@ EOF
 }
 
 setup_git() {
-  cat >>/home/cirrusci/.gitconfig <<EOF
+  cat >>$HOME/.gitconfig <<EOF
 [user]
 	email = unknown.just.user@proton.me
 	name = unknownjustuser

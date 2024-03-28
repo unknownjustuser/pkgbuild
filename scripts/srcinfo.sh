@@ -8,11 +8,8 @@
 # Set flags to make robust
 set -euo pipefail
 
-# Get the directory path of the script
-script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
-
-# Set the path to the packages directory
-packages_dir="$script_dir/../packages"
+pkgbuild_repo="$HOME/pkgbuild"
+packages_dir="$pkgbuild_repo/packages"
 
 for dir in "$packages_dir"/*/; do
   cd "$dir"

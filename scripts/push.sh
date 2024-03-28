@@ -10,10 +10,10 @@ set -euo pipefail
 
 # Lowercase variable names
 pkg_dir="/var/cache/pacman/archfiery"
-repo_dir="/home/cirrusci/repo"
-pkgbuild_repo="/home/cirrusci/pkgbuild"
+repo_dir="$HOME/repo"
+pkgbuild_repo="$HOME/pkgbuild"
 packages="$pkgbuild_repo/packages"
-parucache="/home/cirrusci/.cache/paru/clone"
+parucache="$HOME/.cache/paru/clone"
 current_date=$(date +"%Y-%m-%d")
 
 copy_pkg() {
