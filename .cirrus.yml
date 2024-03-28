@@ -3,37 +3,12 @@ task:
   only_if: $CIRRUS_BRANCH == 'main'
   timeout_in: 120m
   container:
-    image: archlinux:latest
+    image: mikuxdev/archlinux-pkgbuild:latest
     cpu: 4
     memory: 16G
   setup_script: |
-    PATH="$HOME/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/core_perl:$PATH"
-
-    TERM=dumb
-
-    sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /etc/locale.gen
-    locale-gen
-    echo "LANG=en_US.UTF-8" > /etc/locale.conf
-    echo "KEYMAP=us" > /etc/vconsole.conf
-
-    pacman -Syy
-    pacman-key --init
-    pacman-key --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 3056513887B78AEB
-    pacman-key --lsign-key 3056513887B78AEB
-    pacman --noconfirm -U 'https://geo-mirror.chaotic.cx/chaotic-aur/chaotic-'{keyring,mirrorlist}'.pkg.tar.zst'
-    echo "[multilib]" >>/etc/pacman.conf && echo "Include = /etc/pacman.d/mirrorlist" >>/etc/pacman.conf
-    echo -e "\\n[chaotic-aur]\\nInclude = /etc/pacman.d/chaotic-mirrorlist" >>/etc/pacman.conf
-    echo "" >>/etc/pacman.conf
-
-    pacman -Syy --noconfirm --needed --noprogressbar wget bash
-    bash <(wget -qO- https://blackarch.org/strap.sh)
-    pacman -Syyu --noconfirm --needed --noprogressbar
-
-    pacman -Syy --noprogressbar --noconfirm yay archiso audit aurutils autoconf base base-devel cmake curl devtools docker docker-buildx docker-compose fakeroot glibc-locales gnupg grep gzip jq less make man namcap openssh openssl parallel pkgconf python python-apprise python-pip rsync squashfs-tools tar unzip vim wget yq zip paru reflector git-lfs openssh git namcap fakeroot audit grep diffutils parallel cronie
-    pacman -Scc --noconfirm
-    pacman -Syy
-
-    cd $HOME
+    sudo chown -R builder:builder .*
+    sudo chown -R builder:builder *
     mkdir $HOME/bin
     mkdir -p $HOME/.local/bin
     touch $HOME/.gitconfig
@@ -41,8 +16,8 @@ task:
     echo "$SSH_PRIV_KEY" > $HOME/.ssh/id_ed25519
     chmod 600 $HOME/.ssh/id_ed25519
     ssh-keyscan github.com > $HOME/.ssh/known_hosts
-    sudo chown -R cirrusci:cirrusci .*
-    sudo chown -R cirrusci:cirrusci *
+    sudo chown -R builder:builder .*
+    sudo chown -R builder:builder *
     git clone git@github.com:unknownjustuser/pkgbuild.git $HOME/pkgbuild
     cd $HOME/pkgbuild
     git checkout -f
@@ -51,8 +26,8 @@ task:
     cd $HOME/repo
     git checkout -f
     cd -
-    sudo chown -R cirrusci:cirrusci .*
-    sudo chown -R cirrusci:cirrusci *
+    sudo chown -R builder:builder .*
+    sudo chown -R builder:builder *
     sudo chmod 777 *
     ls -al
     ls -al pkgbuild
@@ -60,13 +35,8 @@ task:
     cd $HOME/pkgbuild/
     chmod +x *.sh
     bash setup.sh
-    '
   build_script: |
-    sudo -u cirrusci '
     bash build-pkgbuild.sh
     bash build-txt.sh
-    '
   push_script: |
-    sudo -u cirrusci '
     bash push.sh
-    '
