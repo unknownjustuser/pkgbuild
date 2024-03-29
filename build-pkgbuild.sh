@@ -17,9 +17,16 @@ removeconf() {
   local all_conf=("${conflicts[@]}")
   all_conf=("${all_conf[@]##*/}")
 
-  if [[ ${#all_conf[@]} -gt 0 ]]; then
-    echo "Removing conflicting packages: ${all_conf[*]}"
-    paru -Rnsc --noconfirm --noprogressbar "${all_conf[@]}"
+  local conflicts_installed=()
+  for dep in "${all_conf[@]}"; do
+    if paru -Qi "$dep" >/dev/null 2>&1; then
+      conflicts_installed+=("$dep")
+    fi
+  done
+
+  if [[ ${#conflicts_installed[@]} -gt 0 ]]; then
+    echo "Removing installed conflicting packages: ${conflicts_installed[*]}"
+    paru -Rnsc --noconfirm --noprogressbar "${conflicts_installed[@]}"
   fi
 }
 
