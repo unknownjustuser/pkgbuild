@@ -54,7 +54,7 @@ build_pkgbuild() {
     removeconf
     depsinstall
     aur build --cleanbuild --syncdeps --sign --no-confirm --temp --rmdeps "$dir"
-    removedeps
+    # removedeps
     popd || exit
   done
 }
