@@ -1,3 +1,5 @@
+# Maintainer: unknownjustuser (archfiery) <unknown.just.user@proton.me>
+
 pkgname=pulseaudio-support
 pkgver=1
 pkgrel=10
@@ -20,4 +22,16 @@ optdepends=('pavucontrol: A GTK volume control tool for PulseAudio'
 	'pasystray: PulseAudio system tray'
 	'paprefs: Configuration dialog for PulseAudio'
 	'pulseaudio-ctl: Control PulseAudio volume from the shell or mapped eyboard shortcuts')
-conflicts=("pipewire-support")
+conflicts=("pipewire-support"
+  "gst-plugin-pipewire"
+	"pipewire"
+	"libpipewire"
+	"pipewire-alsa"
+	"pipewire-jack"
+	"pipewire-pulse"
+	"pipewire-v4l2"
+	"pipewire-x11-bell"
+	"pipewire-zeroconf"
+	"realtime-privileges"
+	"sof-firmware"
+	"wireplumber")

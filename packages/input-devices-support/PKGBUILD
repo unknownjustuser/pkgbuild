@@ -1,3 +1,5 @@
+# Maintainer: unknownjustuser (archfiery) <unknown.just.user@proton.me>
+
 pkgname=input-devices-support
 pkgdesc="Meta-package for commonly used input devices such as fingerprint sensors or Wacom tablets"
 pkgver=1.0.2

@@ -1,3 +1,5 @@
+# Maintainer: unknownjustuser (archfiery) <unknown.just.user@proton.me>
+
 pkgname=alsa-support
 pkgdesc="Meta-package containing all needed packages to use ALSA"
 pkgver=1

@@ -21,5 +21,17 @@ pkgbase = pulseaudio-support
 	optdepends = paprefs: Configuration dialog for PulseAudio
 	optdepends = pulseaudio-ctl: Control PulseAudio volume from the shell or mapped eyboard shortcuts
 	conflicts = pipewire-support
+	conflicts = gst-plugin-pipewire
+	conflicts = pipewire
+	conflicts = libpipewire
+	conflicts = pipewire-alsa
+	conflicts = pipewire-jack
+	conflicts = pipewire-pulse
+	conflicts = pipewire-v4l2
+	conflicts = pipewire-x11-bell
+	conflicts = pipewire-zeroconf
+	conflicts = realtime-privileges
+	conflicts = sof-firmware
+	conflicts = wireplumber
 
 pkgname = pulseaudio-support

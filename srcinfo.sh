@@ -8,8 +8,7 @@
 # Set flags to make robust
 set -euo pipefail
 
-pkgbuild_repo="$HOME/pkgbuild"
-packages_dir="$pkgbuild_repo/packages"
+packages_dir="packages"
 
 for dir in "$packages_dir"/*/; do
   cd "$dir"

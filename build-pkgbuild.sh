@@ -37,7 +37,7 @@ depsinstall() {
 
   if [[ ${#all_deps[@]} -gt 0 ]]; then
     echo "Installing dep packages"
-    paru -S --noconfirm --needed --noprogressbar "${all_deps[@]}"
+    paru -S --aur --noconfirm --needed --noprogressbar "${all_deps[@]}"
   fi
 }
 
@@ -58,8 +58,7 @@ build_pkgbuild() {
     pushd "$dir" || exit
     removeconf
     depsinstall
-    aur build --cleanbuild --sign --no-confirm --temp --rmdeps "$dir"
-    removedeps
+    aur build --cleanbuild --syncdeps --sign --no-confirm --temp --rmdeps "$dir"
     popd || exit
   done
 }

@@ -21,7 +21,6 @@ pkgname = libretro-meta
 	depends = libretro-core-info
 	depends = libretro-desmume
 	depends = libretro-dolphin
-	depends = libretro-duckstation
 	depends = libretro-flycast
 	depends = libretro-gambatte
 	depends = libretro-genesis-plus-gx
