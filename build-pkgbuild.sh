@@ -53,8 +53,10 @@ depsinstall() {
 removedeps() {
   if [[ -f "$installed_aur_deps" ]]; then
     while IFS= read -r dep; do
-      echo "Removing dep package: $dep"
-      paru -Rnsc --noconfirm --noprogressbar "$dep"
+      if pacman -Qs "$dep" >/dev/null 2>&1; then
+        echo "Removing dep package: $dep"
+        paru -Rnsc --noconfirm --noprogressbar "$dep"
+      fi
     done <"$installed_aur_deps"
     rm "$installed_aur_deps"
   fi
