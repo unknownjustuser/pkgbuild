@@ -9,6 +9,7 @@
 set -euo pipefail
 
 pkgbuild_repo="$HOME/packages"
+installed_aur_deps="$pkgbuild_repo/installed_aur_deps.txt"
 
 removeconf() {
   source ./PKGBUILD
@@ -35,21 +36,27 @@ depsinstall() {
   local all_deps=("${depends[@]}" "${makedepends[@]}")
   all_deps=("${all_deps[@]##*/}")
 
-  if [[ ${#all_deps[@]} -gt 0 ]]; then
-    echo "Installing dep packages"
-    paru -S --aur --noconfirm --needed --noprogressbar "${all_deps[@]}"
+  local aur_deps=()
+  for dep in "${all_deps[@]}"; do
+    if ! pacman -Qs "$dep" >/dev/null 2>&1; then
+      aur_deps+=("$dep")
+    fi
+  done
+
+  if [[ ${#aur_deps[@]} -gt 0 ]]; then
+    echo "Installing AUR dep packages: ${aur_deps[*]}"
+    paru -S --noconfirm --needed --noprogressbar "${aur_deps[@]}"
+    printf "%s\n" "${aur_deps[@]}" >>"$installed_aur_deps"
   fi
 }
 
 removedeps() {
-  source ./PKGBUILD
-
-  local all_deps=("${depends[@]}" "${makedepends[@]}")
-  all_deps=("${all_deps[@]##*/}")
-
-  if [[ ${#all_deps[@]} -gt 0 ]]; then
-    echo "Removing dep packages"
-    paru -Rnsc --noconfirm --noprogressbar "${all_deps[@]}"
+  if [[ -f "$installed_aur_deps" ]]; then
+    while IFS= read -r dep; do
+      echo "Removing dep package: $dep"
+      paru -Rnsc --noconfirm --noprogressbar "$dep"
+    done <"$installed_aur_deps"
+    rm "$installed_aur_deps"
   fi
 }
 
@@ -59,6 +66,7 @@ build_pkgbuild() {
     removeconf
     depsinstall
     aur build --cleanbuild --syncdeps --sign --no-confirm --temp --rmdeps "$dir"
+    removedeps
     popd || exit
   done
 }
