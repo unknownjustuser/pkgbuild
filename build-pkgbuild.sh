@@ -17,16 +17,9 @@ removeconf() {
   local all_conf=("${conflicts[@]}")
   all_conf=("${all_conf[@]##*/}")
 
-  local conflicts_installed=()
-  for dep in "${all_conf[@]}"; do
-    if pacman -Qs "$dep" >/dev/null 2>&1; then
-      conflicts_installed+=("$dep")
-    fi
-  done
-
-  if [[ ${#conflicts_installed[@]} -gt 0 ]]; then
-    echo "Removing conflicting packages: ${conflicts_installed[*]}"
-    paru -Rnsc --noconfirm --noprogressbar "${conflicts_installed[@]}"
+  if [[ ${#all_conf[@]} -gt 0 ]]; then
+    echo "Removing conflicting packages: ${all_conf[*]}"
+    paru -Rnsc --noconfirm --noprogressbar "${all_conf[@]}"
   fi
 }
 
@@ -36,17 +29,10 @@ depsinstall() {
   local all_deps=("${depends[@]}" "${makedepends[@]}")
   all_deps=("${all_deps[@]##*/}")
 
-  local aur_deps=()
-  for dep in "${all_deps[@]}"; do
-    if ! paru -Qs "$dep" >/dev/null 2>&1; then
-      aur_deps+=("$dep")
-    fi
-  done
-
-  if [[ ${#aur_deps[@]} -gt 0 ]]; then
-    echo "Installing AUR dep packages: ${aur_deps[*]}"
-    paru -S --noconfirm --needed --noprogressbar "${aur_deps[@]}"
-    printf "%s\n" "${aur_deps[@]}" >>"$installed_aur_deps"
+  if [[ ${#all_deps[@]} -gt 0 ]]; then
+    echo "Installing AUR dep packages: ${all_deps[*]}"
+    paru -S --noconfirm --needed --noprogressbar "${all_deps[@]}"
+    printf "%s\n" "${all_deps[@]}" >>"$installed_aur_deps"
   fi
 }
 
