@@ -8,8 +8,8 @@
 # Set flags to make robust
 set -euo pipefail
 
-pkgbuild_repo="$HOME/packages"
-installed_aur_deps="$pkgbuild_repo/installed_aur_deps.txt"
+pkgbuild_repo="packages"
+installed_aur_deps="installed_aur_deps.txt"
 
 removeconf() {
   source ./PKGBUILD
@@ -19,7 +19,7 @@ removeconf() {
 
   local conflicts_installed=()
   for dep in "${all_conf[@]}"; do
-    if paru -Qs "$dep" >/dev/null 2>&1; then
+    if pacman -Qs "$dep" >/dev/null 2>&1; then
       conflicts_installed+=("$dep")
     fi
   done
@@ -38,14 +38,14 @@ depsinstall() {
 
   local aur_deps=()
   for dep in "${all_deps[@]}"; do
-    if ! paru -Qs --aur "$dep" >/dev/null 2>&1; then
+    if ! paru -Qs "$dep" >/dev/null 2>&1; then
       aur_deps+=("$dep")
     fi
   done
 
   if [[ ${#aur_deps[@]} -gt 0 ]]; then
     echo "Installing AUR dep packages: ${aur_deps[*]}"
-    paru -S --aur --noconfirm --needed --noprogressbar "${aur_deps[@]}"
+    paru -S --noconfirm --needed --noprogressbar "${aur_deps[@]}"
     printf "%s\n" "${aur_deps[@]}" >>"$installed_aur_deps"
   fi
 }
@@ -53,9 +53,9 @@ depsinstall() {
 removedeps() {
   if [[ -f "$installed_aur_deps" ]]; then
     while IFS= read -r dep; do
-      if paru -Qs --aur "$dep" >/dev/null 2>&1; then
+      if paru -Qs "$dep" >/dev/null 2>&1; then
         echo "Removing dep package: $dep"
-        paru -Rnsc --aur --noconfirm --noprogressbar "$dep"
+        paru -Rnsc --noconfirm --noprogressbar "$dep"
       fi
     done <"$installed_aur_deps"
     rm "$installed_aur_deps"
