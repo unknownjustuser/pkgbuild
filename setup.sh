@@ -36,7 +36,6 @@ setup_makepkg() {
 setup_paru_conf() {
   sudo tee -a /etc/paru.conf <<EOF
 #
-# $PARU_CONF
 # /etc/paru.conf
 # ~/.config/paru/paru.conf
 #
