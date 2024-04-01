@@ -2,6 +2,7 @@ dex2jar
 android-apktool-bin
 appimagelauncher
 appmenu-gtk-module-git
+appmenu-glib-translator-git
 appmenu-qt4
 aurutils
 auto-cpufreq
@@ -18,6 +19,9 @@ eww
 fancontrol-gui
 grub-btrfs
 gtk3-nocsd-git
+libdbusmenu-glib
+libdbusmenu-gtk2
+libdbusmenu-gtk3
 icoextract
 lib32-ncurses5-compat-libs
 lightdm-webkit2-theme-glorious

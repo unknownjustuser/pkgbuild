@@ -2,9 +2,6 @@ bauerbill
 caffeine-ng
 etcher-bin
 fancontrol-gui
-gtk3-nocsd-git
-lib32-ncurses5-compat-libs
-lightdm-webkit2-theme-glorious
 mkinitcpio-numlock
 libretro-meta
 nbfc-linux

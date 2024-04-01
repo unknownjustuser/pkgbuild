@@ -1,6 +1,13 @@
 #!/bin/bash
 # shellcheck disable=SC2035
 
+# Script name: build.sh
+# Description: Automate setup script on cirrus CI.
+# Contributors: unknownjustuser
+
+# Set flags to make robust
+set -euo pipefail
+
 pkg_dir="/home/builder/repo"
 
 install_deps() {

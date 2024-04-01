@@ -1,8 +1,8 @@
 #!/bin/bash
 # shellcheck disable=SC2035
 
-# Script name: build-packages.sh
-# Description: Script for automating push builded pkgs to repo.
+# Script name: build.sh
+# Description: Automate push script to push changes to github "cirrus CI".
 # Contributors: unknownjustuser
 
 # Set flags to make robust
