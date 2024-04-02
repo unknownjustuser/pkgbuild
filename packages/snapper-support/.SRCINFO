@@ -1,8 +1,8 @@
 pkgbase = snapper-support
 	pkgdesc = Support package for enabling Snapper with snap-pac and grub-btrfs
-	pkgver = 1.1.2
+	pkgver = 1.1.3
 	pkgrel = 3
-	url = https://gitlab.com/garuda-linux/packages/stable-pkgbuilds/snapper-support
+	url = https://linux.org
 	install = snapper-support.install
 	arch = any
 	license = GPL3

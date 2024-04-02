@@ -1,11 +1,11 @@
 # Maintainer: unknownjustuser (archfiery) <unknown.just.user@proton.me>
 
 pkgname=snapper-support
-pkgver=1.1.2
+pkgver=1.1.3
 pkgrel=3
 pkgdesc='Support package for enabling Snapper with snap-pac and grub-btrfs'
 arch=('any')
-url="https://gitlab.com/garuda-linux/packages/stable-pkgbuilds/snapper-support"
+url="https://linux.org"
 license=('GPL3')
 depends=('snapper' 'snap-pac' 'grub-btrfs')
 makedepends=('git')

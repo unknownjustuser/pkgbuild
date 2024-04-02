@@ -1,6 +1,6 @@
 pkgbase = timeshift-support
 	pkgdesc = Support package for enabling Timeshift with timeshift-autosnap and grub-btrfs
-	pkgver = 1
+	pkgver = 1.1.1
 	pkgrel = 1
 	url = https://linux.org
 	install = timeshift-support.install
