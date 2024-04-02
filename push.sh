@@ -13,7 +13,7 @@ pkg_dir="/home/builder/repo"
 pkgbuild_repo="$HOME/packages"
 archfiery_repo="/var/cache/pacman/archfiery_repo"
 parucache="$HOME/.cache/paru/clone"
-current_date=$(date +"%Y-%m-%d")
+current_date=$(date +"%d-%m-%Y")
 
 copy_pkg() {
   for dir in "$pkgbuild_repo"/*/ "$parucache"/*/ "$archfiery_repo"/*/; do
@@ -45,4 +45,4 @@ main() {
   push_repo_dir
 }
 
-main "$@"
+main

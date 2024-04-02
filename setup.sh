@@ -72,21 +72,7 @@ setup_repo() {
     rm -f "$pattern"
   done
 
-  remove_if_exists() {
-    file_pattern="$1"
-    if [[ -f "$file_pattern" ]]; then
-      rm "$file_pattern"
-    fi
-  }
-
-  remove_if_exists "$pkg_dir/*.pkg.tar.zst"
   repo-add --verify --sign archfiery_repo.db.tar.gz *.pkg.tar.zst
-
-  remove_if_exists "$pkg_dir/*.pkg.tar.gz"
-  repo-add --verify --sign archfiery_repo.db.tar.gz *.pkg.tar.gz
-
-  remove_if_exists "$pkg_dir/*.pkg.tar.xz"
-  repo-add --verify --sign archfiery_repo.db.tar.gz *.pkg.tar.xz
 
   sudo chmod 777 *
   cd - || exit
@@ -131,4 +117,4 @@ main() {
   setup_git
 }
 
-main "$@"
+main

@@ -20,4 +20,4 @@ main() {
   txt
 }
 
-main "$@"
+main

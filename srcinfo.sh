@@ -2,7 +2,7 @@
 # shellcheck disable=SC1091
 
 # Script name: build.sh
-# Description: Automate pkgbuild on cirrus CI.
+# Description: Automate .SRCINFO gen.
 # Contributors: unknownjustuser
 
 # Set flags to make robust
