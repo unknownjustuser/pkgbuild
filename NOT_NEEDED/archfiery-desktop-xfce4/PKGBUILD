@@ -1,7 +1,7 @@
 # Maintainer: unknownjustuser (archfiery) <unknown.just.user@proton.me>
 
-pkgname=xfce4-meta-all
-pkgver=4.18
+pkgname=archfiery-desktop-xfce4
+pkgver=1
 pkgrel=1
 pkgdesc='Meta package for installing the xfce4 && xfce4 group'
 arch=(any)

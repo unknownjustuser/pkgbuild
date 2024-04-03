@@ -6,7 +6,7 @@ mkinitcpio_has_grub_btrfs_overlayfs_hook() {
 
 post_install() {
     # Change grub snapshot submenu name
-    if [ -e /etc/lsb-release ]; then
+    if [[ -e /etc/lsb-release ]]; then
        echo "Using default grub snapshot submenu name"
     else
        sed -i /etc/default/grub-btrfs/config \

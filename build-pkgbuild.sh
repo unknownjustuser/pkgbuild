@@ -60,7 +60,7 @@ build_pkgbuild() {
     pushd "$dir" || exit
     removeconf
     depsinstall
-    aur build --cleanbuild --syncdeps --sign --no-confirm --temp --rmdeps "$dir"
+    makepkg --cleanbuild --clean --syncdeps --sign --noconfirm --rmdeps "$dir"
     # removedeps
     popd || exit
   done
