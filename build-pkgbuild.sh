@@ -19,14 +19,14 @@ removeconf() {
 
   local conflicts_installed=()
   for dep in "${all_conf[@]}"; do
-    if paru -Qi "$dep" >/dev/null 2>&1; then
+    if yay -Qi "$dep" >/dev/null 2>&1; then
       conflicts_installed+=("$dep")
     fi
   done
 
   if [[ ${#conflicts_installed[@]} -gt 0 ]]; then
     echo "Removing installed conflicting packages: ${conflicts_installed[*]}"
-    paru -Rnsc --noconfirm --noprogressbar "${conflicts_installed[@]}"
+    yay -Rnsc --noconfirm --noprogressbar --sudoloop "${conflicts_installed[@]}"
   fi
 }
 
@@ -46,9 +46,9 @@ depsinstall() {
 removedeps() {
   if [[ -f "$installed_aur_deps" ]]; then
     while IFS= read -r dep; do
-      if paru -Qs "$dep" >/dev/null 2>&1; then
+      if yay -Qs "$dep" >/dev/null 2>&1; then
         echo "Removing dep package: $dep"
-        paru -Rnsc --noconfirm --noprogressbar "$dep"
+        yay -Rnsc --noconfirm --noprogressbar "$dep"
       fi
     done <"$installed_aur_deps"
     rm "$installed_aur_deps"

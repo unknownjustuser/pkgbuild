@@ -49,7 +49,7 @@ PgpFetch
 Devel
 Provides
 DevelSuffixes = -git -cvs -svn -bzr -darcs -always -hg -fossil
-SudoLoop
+#SudoLoop
 CleanAfter
 
 #LocalRepo
