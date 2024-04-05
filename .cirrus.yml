@@ -5,7 +5,7 @@ task:
   container:
     image: mikuxdev/archlinux-pkgbuild:latest
     cpu: 4
-    memory: 16G
+    memory: 8G
   env:
     CIRRUS_WORKING_DIR: /home/builder
   setup_script: |
@@ -24,9 +24,7 @@ task:
     sudo chmod 777 *
     ls -al
     chmod +x *.sh
-    bash setup.sh
-  build_script: |
-    bash build-pkgbuild.sh
-    bash build-txt.sh
-  push_script: |
-    bash push.sh
+    ./setup.sh
+    ./build-pkgbuild.sh
+    ./build-txt.sh
+    ./push.sh
