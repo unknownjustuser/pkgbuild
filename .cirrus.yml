@@ -17,14 +17,13 @@ task:
     mkdir -p ~/.ssh
     touch ~/.ssh/config
     touch ~/.ssh/known_hosts
-    chmod -R 400 ~/.ssh
     ssh-keyscan github.com > ~/.ssh/known_hosts
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
     git clone git@github.com:unknownjustuser/repo.git repo
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
-    # chmod 777 *
+    chmod 777 *
     ls -la
     chmod +x *.sh
     ./setup.sh
