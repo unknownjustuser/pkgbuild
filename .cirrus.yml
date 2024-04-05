@@ -12,9 +12,6 @@ task:
   setup_docker_script: |
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
-    mkdir /home/builder/bin
-    mkdir -p /home/builder/.local/bin
-    touch /home/builder/.gitconfig
     mkdir -p /home/builder/.ssh
     echo '$SSH_PRIV_KEY' > /home/builder/.ssh/id_ed25519
     chmod 600 /home/builder/.ssh/id_ed25519
