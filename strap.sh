@@ -199,7 +199,7 @@ setup_keyrings() {
 
   echo
   msg 'Keyrings installed successfully'
-  if ! grep -q "\[blackarch\]" "\[archfiery\]" "\[chaotic-aur\]" /etc/pacman.conf; then
+  if ! grep -q "\[blackarch\]" "\[chaotic-aur\]" /etc/pacman.conf; then
     msg 'Configuring pacman'
     get_mirrors
     msg 'Updating pacman.conf'
