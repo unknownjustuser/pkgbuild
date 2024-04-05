@@ -6,10 +6,11 @@ task:
     dockerfile: ci/Dockerfile
     cpu: 4
     memory: 6G
+    privileged: true
   env:
     CIRRUS_WORKING_DIR: /home/builder
-    CIRRUS_USER_PERMISSION: admin
-  setup_docker_script: |
+    CIRRUS_USER_PERMISSION: admin,read,write
+  setup_script: |
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
     eval $(ssh-agent -s)
