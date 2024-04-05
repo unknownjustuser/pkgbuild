@@ -11,8 +11,8 @@ task:
     bash <(wget -qO- https://raw.githubusercontent.com/unknownjustuser/pkgbuild/main/strap.sh)
     bash <(wget -qO- https://raw.githubusercontent.com/unknownjustuser/pkgbuild/main/setup-docker.sh)
     sudo -u builder sh -c "
-      chown -R builder:builder .*
-      chown -R builder:builder *
+      sudo chown -R builder:builder .*
+      sudo chown -R builder:builder *
       mkdir '${HOME}'/bin
       mkdir -p '${HOME}'/.local/bin
       touch '${HOME}'/.gitconfig
@@ -21,9 +21,9 @@ task:
       chmod 600 '${HOME}'/.ssh/id_ed25519
       ssh-keyscan github.com >> '${HOME}'/.ssh/known_hosts
       git clone git@github.com:unknownjustuser/repo.git repo
-      chown -R builder:builder .*
-      chown -R builder:builder *
-      chmod 777 *
+      sudo chown -R builder:builder .*
+      sudo chown -R builder:builder *
+      # chmod 777 *
       ls -la
       chmod +x *.sh
       ./setup.sh
