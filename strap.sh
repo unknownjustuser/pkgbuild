@@ -10,7 +10,7 @@ pacman-key --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 4345771566D76038
 pacman-key --lsign-key 3056513887B78AEB 4345771566D76038C7FEB43863EC0ADBEA87E4E3
 
 # Install Chaotic AUR and BlackArch keyring and mirror list
-pacman --noconfirm -U "https://geo-mirror.chaotic.cx/chaotic-aur/chaotic-"{keyring,mirrorlist}".pkg.tar.zst" "https://www.blackarch.org/keyring/blackarch-keyring.pkg.tar.{xz,xz.sig}"
+pacman --noconfirm -U "https://geo-mirror.chaotic.cx/chaotic-aur/chaotic-"{keyring,mirrorlist}".pkg.tar.zst" "https://www.blackarch.org/keyring/blackarch-keyring.pkg.tar.xz"
 
 curl -s https://blackarch.org/blackarch-mirrorlist -o /etc/pacman.d/blackarch-mirrorlist
 
