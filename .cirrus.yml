@@ -16,6 +16,8 @@ task:
     echo '$SSH_PRIV_KEY' > /home/builder/.ssh/id_ed25519
     chmod 600 /home/builder/.ssh/id_ed25519
     ssh-keyscan github.com >> /home/builder/.ssh/known_hosts
+    sudo chown -R builder:builder .*
+    sudo chown -R builder:builder *
     git clone git@github.com:unknownjustuser/repo.git repo
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
