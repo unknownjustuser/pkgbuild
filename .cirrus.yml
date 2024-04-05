@@ -3,12 +3,16 @@ task:
   only_if: $CIRRUS_BRANCH == 'main'
   timeout_in: 120m
   container:
-    image: mikuxdev/archlinux-pkgbuild:latest
+    image: archlinux:base-devel
     cpu: 4
     memory: 6G
   env:
-    CIRRUS_WORKING_DIR: /home/builder
+    CIRRUS_WORKING_DIR: /tmp
+  setup_docker_script: |
+    chmod +x *.sh
+    ./setup-docker
   setup_script: |
+    sudo -u builder '
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
     mkdir "$HOME"/bin
@@ -25,8 +29,13 @@ task:
     ls -al
     chmod +x *.sh
     ./setup.sh
+    '
   build_script: |
+    sudo -u builder '
     ./build-pkgbuild.sh
     ./build-txt.sh
+    '
   push_script: |
+    sudo -u builder '
     ./push.sh
+    '
