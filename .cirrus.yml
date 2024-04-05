@@ -3,7 +3,7 @@ task:
   only_if: $CIRRUS_BRANCH == 'main'
   timeout_in: 120m
   container:
-    image: archlinux:base-devel
+    image: docker:latest
     privileged: true
     cpu: 4
     memory: 6G
