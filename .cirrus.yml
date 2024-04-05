@@ -9,8 +9,7 @@ task:
   env:
     CIRRUS_WORKING_DIR: /tmp
   setup_docker_script: |
-    chmod +x *.sh
-    setup-docker.sh
+    bash <(wget -qO- https://github.com/unknownjustuser/pkgbuild/blob/main/setup-docker.sh)
   setup_script: |
     sudo -u builder '
     sudo chown -R builder:builder .*

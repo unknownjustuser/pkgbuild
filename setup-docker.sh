@@ -1,5 +1,6 @@
 #!/bin/bash
 
+pacman -Scc --noconfirm
 pacman -Syy
 pacman-key --init
 pacman-key --keyserver keyserver.ubuntu.com --recv-key 3056513887B78AEB
