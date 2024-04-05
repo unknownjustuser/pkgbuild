@@ -13,4 +13,4 @@ echo "root ALL=(ALL) NOPASSWD: ALL" >>/etc/sudoers
 usermod -a -G docker builder
 chown -R builder:builder /home/builder/
 
-PATH="$HOME/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/core_perl:$PATH"
+PATH="/home/builder/bin:/home/builder/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/core_perl:$PATH"
