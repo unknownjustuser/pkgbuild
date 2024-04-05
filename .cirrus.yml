@@ -6,10 +6,12 @@ task:
     image: archlinux:base-devel
     cpu: 4
     memory: 6G
-  setup_docker_script: |
+  setup_script: |
     pacman -Syy --noconfirm --quiet --needed wget
-    bash <(wget -qO- https://raw.githubusercontent.com/unknownjustuser/pkgbuild/main/strap.sh)
-    bash <(wget -qO- https://raw.githubusercontent.com/unknownjustuser/pkgbuild/main/setup-docker.sh)
+    chmod +x strap.sh
+    ./strap.sh
+    chmod +x setup-docker.sh
+    ./setup-docker.sh
     sudo -u builder '
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
