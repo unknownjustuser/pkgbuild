@@ -6,8 +6,6 @@ task:
     image: archlinux:base-devel
     cpu: 4
     memory: 6G
-  env:
-    CIRRUS_WORKING_DIR: /tmp
   setup_docker_script: |
     pacman -Syy --noconfirm --quiet --needed wget
     bash <(wget -qO- https://raw.githubusercontent.com/unknownjustuser/pkgbuild/main/strap.sh)
