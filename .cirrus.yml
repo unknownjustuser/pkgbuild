@@ -3,33 +3,11 @@ task:
   only_if: $CIRRUS_BRANCH == 'main'
   timeout_in: 120m
   container:
-    dockerfile: ci/Dockerfile
+    image: archlinux:base-devel
     privileged: true
     cpu: 4
     memory: 6G
   env:
-    CIRRUS_WORKING_DIR: /home/builder
     CIRRUS_USER_PERMISSION: admin
-  setup_script: |
-    sudo chown -R builder:builder .*
-    sudo chown -R builder:builder *
-    eval $(ssh-agent -s)
-    echo "$SSH_PRIV_KEY" | tr -d '\r' | ssh-add -
-    mkdir -p ~/.ssh
-    touch ~/.ssh/config
-    touch ~/.ssh/known_hosts
-    ssh-keyscan github.com > ~/.ssh/known_hosts
-    sudo chown -R builder:builder .*
-    sudo chown -R builder:builder *
-    git clone git@github.com:unknownjustuser/repo.git repo
-    sudo chown -R builder:builder .*
-    sudo chown -R builder:builder *
-    chmod 777 *
-    ls -la
-    chmod +x *.sh
-    ./setup.sh
-  build_script: |
-    ./build-pkgbuild.sh
-    ./build-txt.sh
-  push_script: |
-    ./push.sh
+  all_script: |
+    docker run --rm --privileged -i -v ${PWD}:/home/builder $(docker build -q .)
