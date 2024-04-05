@@ -3,7 +3,7 @@
 pacman -Scc --noconfirm
 pacman -Syy
 pacman-key --init
-pacman-key --keyserver keyserver.ubuntu.com --recv-key 3056513887B78AEB
+pacman-key --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 3056513887B78AEB
 pacman-key --lsign-key 3056513887B78AEB
 pacman --noconfirm -U 'https://geo-mirror.chaotic.cx/chaotic-aur/chaotic-'{keyring,mirrorlist}'.pkg.tar.zst'
 echo "[multilib]" >>/etc/pacman.conf && echo "Include = /etc/pacman.d/mirrorlist" >>/etc/pacman.conf
