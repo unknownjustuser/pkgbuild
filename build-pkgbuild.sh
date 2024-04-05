@@ -26,7 +26,7 @@ removeconf() {
 
   if [[ ${#conflicts_installed[@]} -gt 0 ]]; then
     echo "Removing installed conflicting packages: ${conflicts_installed[*]}"
-    yay -Rnsc --noconfirm --noprogressbar --sudoloop "${conflicts_installed[@]}"
+    sudo pacman -Rnsc --noconfirm --noprogressbar "${conflicts_installed[@]}"
   fi
 }
 
