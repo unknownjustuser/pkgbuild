@@ -8,9 +8,11 @@ task:
     memory: 6G
   setup_docker_script: |
     pacman -Syy --noconfirm --quiet --needed wget
-    bash <(wget -qO- https://raw.githubusercontent.com/unknownjustuser/pkgbuild/main/strap.sh)
-    bash <(wget -qO- https://raw.githubusercontent.com/unknownjustuser/pkgbuild/main/setup-docker.sh)
-    sudo -u builder sh -c "
+    chmod +x strap.sh
+    bash strap.sh
+    chmod +x setup-docker.sh
+    bash setup-docker.sh
+    sudo -u builder bash -c "
       sudo chown -R builder:builder .*
       sudo chown -R builder:builder *
       mkdir /home/builder/bin
@@ -29,11 +31,11 @@ task:
       ./setup.sh
     "
   build_script: |
-    sudo -u builder sh -c "
+    sudo -u builder bash -c "
       ./build-pkgbuild.sh
       ./build-txt.sh
     "
   push_script: |
-    sudo -u builder sh -c "
+    sudo -u builder bash -c "
       ./push.sh
     "
