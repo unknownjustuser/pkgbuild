@@ -17,10 +17,7 @@ mirror_path="/etc/pacman.d"
 MIRROR_B="blackarch-mirrorlist"
 blackarch_url="https://blackarch.org"
 
-if ! curl -s "$blackarch_url/$MIRROR_B" -o "$mirror_path/$MIRROR_B"; then
-  echo "Error: Couldn't fetch the BlackArch mirror list" >&2
-  exit 1
-fi
+curl -s "$blackarch_url/$MIRROR_B" -o "$mirror_path/$MIRROR_B"
 
 cat >>"/etc/pacman.conf" <<EOF
 

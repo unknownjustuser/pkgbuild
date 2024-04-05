@@ -6,36 +6,34 @@ task:
     image: archlinux:base-devel
     cpu: 4
     memory: 6G
-  setup_script: |
+  setup_docker_script: |
     pacman -Syy --noconfirm --quiet --needed wget
-    chmod +x strap.sh
-    ./strap.sh
-    chmod +x setup-docker.sh
-    ./setup-docker.sh
-    sudo -u builder '
-    sudo chown -R builder:builder .*
-    sudo chown -R builder:builder *
-    mkdir "$HOME"/bin
-    mkdir -p "$HOME"/.local/bin
-    touch "$HOME"/.gitconfig
-    mkdir -p "$HOME"/.ssh
-    echo "$SSH_PRIV_KEY" > "$HOME"/.ssh/id_ed25519
-    chmod 600 "$HOME"/.ssh/id_ed25519
-    ssh-keyscan github.com > "$HOME"/.ssh/known_hosts
-    git clone git@github.com:unknownjustuser/repo.git repo
-    sudo chown -R builder:builder .*
-    sudo chown -R builder:builder *
-    sudo chmod 777 *
-    ls -al
-    chmod +x *.sh
-    ./setup.sh
-    '
+    bash <(wget -qO- https://raw.githubusercontent.com/unknownjustuser/pkgbuild/main/strap.sh)
+    bash <(wget -qO- https://raw.githubusercontent.com/unknownjustuser/pkgbuild/main/setup-docker.sh)
+    sudo -u builder sh -c "
+      chown -R builder:builder .*
+      chown -R builder:builder *
+      mkdir '${HOME}'/bin
+      mkdir -p '${HOME}'/.local/bin
+      touch '${HOME}'/.gitconfig
+      mkdir -p '${HOME}'/.ssh
+      echo '$SSH_PRIV_KEY' > '${HOME}'/.ssh/id_ed25519
+      chmod 600 '${HOME}'/.ssh/id_ed25519
+      ssh-keyscan github.com >> '${HOME}'/.ssh/known_hosts
+      git clone git@github.com:unknownjustuser/repo.git repo
+      chown -R builder:builder .*
+      chown -R builder:builder *
+      chmod 777 *
+      ls -la
+      chmod +x *.sh
+      ./setup.sh
+    "
   build_script: |
-    sudo -u builder '
-    ./build-pkgbuild.sh
-    ./build-txt.sh
-    '
+    sudo -u builder sh -c "
+      ./build-pkgbuild.sh
+      ./build-txt.sh
+    "
   push_script: |
-    sudo -u builder '
-    ./push.sh
-    '
+    sudo -u builder sh -c "
+      ./push.sh
+    "
