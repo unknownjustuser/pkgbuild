@@ -12,10 +12,13 @@ task:
   setup_docker_script: |
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
-    mkdir -p /home/builder/.ssh
-    echo '$SSH_PRIV_KEY' > /home/builder/.ssh/id_ed25519
-    chmod 600 /home/builder/.ssh/id_ed25519
-    ssh-keyscan github.com >> /home/builder/.ssh/known_hosts
+    eval $(ssh-agent -s)
+    echo "$SSH_PRIV_KEY" | tr -d '\r' | ssh-add -
+    mkdir -p ~/.ssh
+    touch ~/.ssh/config
+    touch ~/.ssh/known_hosts
+    chmod -R 400 ~/.ssh
+    ssh-keyscan github.com > ~/.ssh/known_hosts
     sudo chown -R builder:builder .*
     sudo chown -R builder:builder *
     git clone git@github.com:unknownjustuser/repo.git repo
