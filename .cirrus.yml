@@ -17,9 +17,10 @@ task:
       sudo pacman -Syy --noconfirm --quiet --needed wget
       sudo pacman-key --init
       sudo pacman-key --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 3056513887B78AEB
-      sudo pacman --noconfirm -U "https://geo-mirror.chaotic.cx/chaotic-aur/chaotic-"{keyring,mirrorlist}".pkg.tar.zst"
-      sudo echo "[multilib]" >>/etc/pacman.conf && echo "Include = /etc/pacman.d/mirrorlist" >>/etc/pacman.conf
-      sudo echo -e "\\n[chaotic-aur]\\nInclude = /etc/pacman.d/chaotic-mirrorlist" >>/etc/pacman.conf
+      sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+      sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+      sudo echo '[multilib]' >>/etc/pacman.conf && echo 'Include = /etc/pacman.d/mirrorlist' >>/etc/pacman.conf
+      sudo echo -e '\\n[chaotic-aur]\\nInclude = /etc/pacman.d/chaotic-mirrorlist' >>/etc/pacman.conf
       sudo pacman -Syy
       sudo bash <(wget -qO- https://blackarch.org/strap.sh)
       sudo pacman -Scc --noconfirm
