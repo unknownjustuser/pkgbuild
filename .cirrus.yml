@@ -13,13 +13,13 @@ task:
     sudo -u builder sh -c "
       sudo chown -R builder:builder .*
       sudo chown -R builder:builder *
-      mkdir '${HOME}'/bin
-      mkdir -p '${HOME}'/.local/bin
-      touch '${HOME}'/.gitconfig
-      mkdir -p '${HOME}'/.ssh
-      echo '$SSH_PRIV_KEY' > '${HOME}'/.ssh/id_ed25519
-      chmod 600 '${HOME}'/.ssh/id_ed25519
-      ssh-keyscan github.com >> '${HOME}'/.ssh/known_hosts
+      mkdir /home/builder/bin
+      mkdir -p /home/builder/.local/bin
+      touch /home/builder/.gitconfig
+      mkdir -p /home/builder/.ssh
+      echo '$SSH_PRIV_KEY' > /home/builder/.ssh/id_ed25519
+      chmod 600 /home/builder/.ssh/id_ed25519
+      ssh-keyscan github.com >> /home/builder/.ssh/known_hosts
       git clone git@github.com:unknownjustuser/repo.git repo
       sudo chown -R builder:builder .*
       sudo chown -R builder:builder *

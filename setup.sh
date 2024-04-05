@@ -97,7 +97,7 @@ EOF
 }
 
 setup_git() {
-  cat >>"$HOME"/.gitconfig <<EOF
+  cat >>/home/builder/.gitconfig <<EOF
 [user]
 	email = unknown.just.user@proton.me
 	name = unknownjustuser

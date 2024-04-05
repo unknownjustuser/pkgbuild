@@ -9,9 +9,9 @@
 set -euo pipefail
 
 # Lowercase variable names
-pkg_dir="$HOME/repo"
-pkgbuild_repo="$HOME/packages"
-parucache="$HOME/.cache/paru/clone"
+pkg_dir="/home/builder/repo"
+pkgbuild_repo="/home/builder/packages"
+parucache="/home/builder/.cache/paru/clone"
 current_date=$(date +"%d-%m-%Y")
 
 copy_pkg() {
