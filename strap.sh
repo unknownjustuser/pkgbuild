@@ -14,14 +14,12 @@ pacman --noconfirm -U "https://geo-mirror.chaotic.cx/chaotic-aur/chaotic-"{keyri
 
 curl -s https://blackarch.org/blackarch-mirrorlist -o /etc/pacman.d/blackarch-mirrorlist
 
-{
-  echo ""
-  echo "[multilib]"
-  echo "Include = /etc/pacman.d/mirrorlist"
-  echo ""
-  echo "[blackarch]"
-  echo "Include = /etc/pacman.d/blackarch-mirrorlist"
-  echo ""
-  echo "[chaotic-aur]"
-  echo "Include = /etc/pacman.d/chaotic-mirrorlist"
-} >>/etc/pacman.conf
+echo -e "" >>/etc/pacman.conf
+echo -e "[multilib]" >>/etc/pacman.conf
+echo -e "Include = /etc/pacman.d/mirrorlist" >>/etc/pacman.conf
+echo -e "" >>/etc/pacman.conf
+echo -e "[blackarch]" >>/etc/pacman.conf
+echo -e "Include = /etc/pacman.d/blackarch-mirrorlist" >>/etc/pacman.conf
+echo -e "" >>/etc/pacman.conf
+echo -e "[chaotic-aur]" >>/etc/pacman.conf
+echo -e "Include = /etc/pacman.d/chaotic-mirrorlist" >>/etc/pacman.conf
