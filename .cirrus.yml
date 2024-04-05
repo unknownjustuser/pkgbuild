@@ -10,7 +10,7 @@ task:
     CIRRUS_WORKING_DIR: /tmp
   setup_docker_script: |
     chmod +x *.sh
-    ./setup-docker
+    setup-docker.sh
   setup_script: |
     sudo -u builder '
     sudo chown -R builder:builder .*
