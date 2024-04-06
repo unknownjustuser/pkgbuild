@@ -9,6 +9,5 @@ task:
     memory: 6G
   all_script: |
     apk update && apk add bash git make docker sudo
-    systemctl start docker
     docker build -t my_image .
     docker run --rm --privileged -i -v ${PWD}:/home/builder my_image
