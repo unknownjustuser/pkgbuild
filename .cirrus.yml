@@ -10,7 +10,7 @@ task:
   all_script: |
     pacman-key --init
     pacman -Syy --noconfirm --noprogressbar docker
-    # usermod -a -G docker $USER
-    # systemctl start docker
+    usermod -a -G docker $USER
+    systemctl start docker
     docker build -t my_image .
     docker run --rm --privileged -i -v ${PWD}:/home/builder my_image
