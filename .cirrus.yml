@@ -8,7 +8,7 @@ task:
     cpu: 4
     memory: 6G
   all_script: |
-    apt update -y && apt install sudo -y
+    apk update && apk add bash git make docker sudo
     systemctl start docker
     docker build -t my_image .
     docker run --rm --privileged -i -v ${PWD}:/home/builder my_image
