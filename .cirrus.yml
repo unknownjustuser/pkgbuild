@@ -3,13 +3,10 @@ task:
   only_if: $CIRRUS_BRANCH == 'main'
   timeout_in: 120m
   container:
-    image: archlinux:base-devel
+    image: docker:latest
     privileged: true
     cpu: 4
     memory: 6G
   all_script: |
-    pacman-key --init
-    pacman -Syy --noconfirm --noprogressbar docker
-    systemctl start docker
     docker build -t my_image .
     docker run --rm --privileged -i -v ${PWD}:/home/builder my_image
