@@ -15,17 +15,6 @@ install_deps() {
   sudo pacman -Syy --noconfirm --quiet --needed --noprogressbar archlinux-keyring
 }
 
-setup_archfiery_gpg() {
-  echo "$GPG_PRIV" >~/priv.asc
-  echo "$GPG_PUB" >~/pub.asc
-  sudo chown -R builder:builder *
-  gpg --import ~/*.asc
-  sudo pacman-key --add ~/*.asc
-  sudo pacman-key --lsign-key 5357F2D3B5E38D00
-  rm -rf ~/*.asc
-  sudo pacman -Syy
-}
-
 setup_makepkg() {
   sudo sed -i 's|^#\(BUILDDIR=\).*|\1/tmp/makepkg|' /etc/makepkg.conf
   sudo sed -i 's|BUILDENV=.*|BUILDENV=(!distcc color !ccache check sign)|' /etc/makepkg.conf
@@ -110,7 +99,6 @@ EOF
 
 main() {
   install_deps
-  setup_archfiery_gpg
   setup_makepkg
   setup_paru_conf
   setup_repo
