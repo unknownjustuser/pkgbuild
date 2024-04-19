@@ -8,7 +8,7 @@
 # Set flags to make robust
 set -euo pipefail
 
-pkg_dir="/home/builder/repo"
+pkg_dir="/src/repo"
 
 install_deps() {
   # Update the system and install essential x86_64
@@ -70,12 +70,12 @@ setup_repo() {
 
 [options]
 CacheDir = /var/cache/pacman/pkg
-CacheDir = /home/builder/repo/x86_64
+CacheDir = /src/repo/x86_64
 CleanMethod = KeepCurrent
 
 [archfiery_repo]
 SigLevel = Required DatabaseOptional
-Server = file:///home/builder/repo/x86_64
+Server = file:///src/repo/x86_64
 
 EOF
 
@@ -86,7 +86,7 @@ EOF
 }
 
 setup_git() {
-  cat >>/home/builder/.gitconfig <<EOF
+  cat >>/src/.gitconfig <<EOF
 [user]
 	email = unknown.just.user@proton.me
 	name = unknownjustuser
