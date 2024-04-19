@@ -8,9 +8,11 @@ task:
     cpu: 4
     memory: 6G
   deps_install_script: |
-    pacman-key --init && pacman -Syy --noconfirm git make docker
+    pacman-key --init && pacman -Syy --noconfirm git make docker docker-buildx
   setup_script: |
     chmod +x *.sh
+    systemctl start docker
+    docker buildx install
   build_script: |
     docker build -t my_image .
     docker run --privileged -i -v ${PWD}:/src my_image
