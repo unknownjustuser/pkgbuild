@@ -24,6 +24,12 @@ RUN pacman-key --init && \
 RUN pacman -Syy --noconfirm --needed --noprogressbar wget bash && \
   bash <(wget -qO- https://blackarch.org/strap.sh) && \
   sed -i 's/^#Server = https/Server = https/' /etc/pacman.d/blackarch-mirrorlist && \
+  echo "$GPG_PRIV" >/priv.asc && \
+  echo "$GPG_PUB" >/pub.asc && \
+  gpg --import /*.asc && \
+  sudo pacman-key --add /*.asc && \
+  sudo pacman-key --lsign-key 5357F2D3B5E38D00 && \
+  rm -rf /*.asc && \
   pacman -Syyu --noconfirm --needed --noprogressbar
 
 RUN pacman -Sy --noprogressbar --noconfirm alsa-utils archiso audit aurutils autoconf b43-fwcutter base base-devel bcachefs-tools btrfs-progs ca-certificates cloud-init cmake cronie curl darkhttpd devtools diffutils docker docker-buildx docker-compose dosfstools fakeroot file git git-lfs glibc-locales gnu-netcat gnupg grep gzip jq less lib32-readline lib32-zlib libinput linux linux-atm linux-firmware linux-firmware-marvell lsb-release lsof make man man-db man-pages mariadb mariadb-clients mkinitcpio mkinitcpio-firmware mkinitcpio-nfs-utils mtools namcap nano net-tools openssh openssl parallel paru pkgconf postgresql-libs python python-apprise python-pip reflector retry rsync shellcheck sof-firmware sqlite squashfs-tools sudo syslinux systemd-resolvconf tar tzdata unzip vim wget wireless_tools wireless-regdb yay yq zip zsync
