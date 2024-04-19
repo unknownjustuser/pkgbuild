@@ -3,16 +3,14 @@ task:
   only_if: $CIRRUS_BRANCH == 'main'
   timeout_in: 120m
   container:
-    image: archlinux:base-devel
+    image: docker:latest
     privileged: true
     cpu: 4
     memory: 6G
   deps_install_script: |
-    pacman-key --init && pacman -Syy --noconfirm git make docker docker-buildx
+    apk update && apk add bash git make docker sudo docker-buildx
   setup_script: |
     chmod +x *.sh
-    systemctl start docker
-    docker buildx install
   build_script: |
     docker build -t my_image .
-    docker run --privileged -i -v ${PWD}:/src my_image
+    docker run --rm --privileged -i -v ${PWD}:/src my_image
