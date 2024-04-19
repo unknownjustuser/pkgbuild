@@ -8,7 +8,7 @@ task:
     cpu: 4
     memory: 6G
   deps_install_script: |
-    pacman-key --init && pacman -Syy git make docker
+    pacman-key --init && pacman -Syy --noconfirm git make docker
   setup_script: |
     chmod +x *.sh
     ./setup.sh
