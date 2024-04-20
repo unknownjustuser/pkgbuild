@@ -9,7 +9,12 @@ task:
     memory: 6G
   setup_script: |
     apk update
+    ls -alh
     chmod +x *.sh
+    service docker status
+    service docker start
+    usermod -aG docker $USER
+    chmod 660 /var/run/docker.sock
   build_script: |
     docker build -t my_image .
     docker run --rm --privileged -i -v ${PWD}:/src my_image
